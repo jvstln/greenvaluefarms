@@ -1,7 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { ShoppingBasket, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useMemo, useState } from "react";
+import { WhatsAppIcon } from "@/components/shared/icons";
+import { QuantityStepper } from "@/components/shared/quantity-stepper";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetContent,
@@ -10,16 +16,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { QuantityStepper } from "@/components/shared/quantity-stepper";
-import { WhatsAppIcon } from "@/components/shared/icons";
-import { useOrder } from "@/lib/order-store";
 import { siteConfig } from "@/lib/config/site";
-import { buildWhatsAppOrderMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 import { formatPrice } from "@/lib/format";
-import { ShoppingBasket, Trash2 } from "lucide-react";
+import { useOrder } from "@/lib/order-store";
+import { cn } from "@/lib/utils";
+import { buildWhatsAppOrderMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 
 /**
  * Persistent order summary, shown as a slide-over panel. Lets the customer
@@ -45,8 +46,6 @@ export function OrderSummarySheet() {
       details: { name, notes },
     });
     return buildWhatsAppUrl(business.contact.whatsappNumber, message);
-    // siteConfig (and therefore `business`) is a module-level constant.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lines, name, notes]);
 
   const empty = lines.length === 0;
@@ -54,8 +53,10 @@ export function OrderSummarySheet() {
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeSheet()}>
       <SheetContent className="w-full! gap-0 p-0 sm:max-w-md" side="right">
-        <SheetHeader className="border-b border-border px-5 py-4">
-          <SheetTitle className="font-display text-xl">{orderSheet.title}</SheetTitle>
+        <SheetHeader className="border-border border-b px-5 py-4">
+          <SheetTitle className="font-display text-xl">
+            {orderSheet.title}
+          </SheetTitle>
           <SheetDescription>
             {empty
               ? orderSheet.emptyTitle
@@ -70,15 +71,21 @@ export function OrderSummarySheet() {
               <ShoppingBasket className="size-6 text-muted-foreground" />
             </span>
             <div>
-              <p className="font-display text-lg font-semibold">{orderSheet.emptyTitle}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{orderSheet.emptyMessage}</p>
+              <p className="font-display font-semibold text-lg">
+                {orderSheet.emptyTitle}
+              </p>
+              <p className="mt-1 text-muted-foreground text-sm">
+                {orderSheet.emptyMessage}
+              </p>
             </div>
             <Button
               variant="outline"
               className="rounded-full"
               onClick={() => {
                 closeSheet();
-                document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
+                document
+                  .querySelector("#products")
+                  ?.scrollIntoView({ behavior: "smooth" });
               }}
             >
               {orderSheet.browseLabel}
@@ -104,13 +111,19 @@ export function OrderSummarySheet() {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold">{product.name}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="truncate font-semibold text-sm">
+                          {product.name}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
                           {formatPrice(product.price, currency)} {product.unit}
                         </p>
                         <div className="mt-1.5 flex items-center gap-2">
-                          <QuantityStepper value={qty} onChange={(next) => setQty(product.id, next)} min={0} className="scale-90 origin-left" />
-                          <span className="text-sm font-semibold tabular-nums">
+                          <QuantityStepper
+                            value={qty}
+                            onChange={(next) => setQty(product.id, next)}
+                            min={0}
+                          />
+                          <span className="font-semibold text-sm tabular-nums">
                             {formatPrice(product.price * qty, currency)}
                           </span>
                         </div>
@@ -132,7 +145,7 @@ export function OrderSummarySheet() {
             </div>
 
             {/* Footer: details + total + send */}
-            <SheetFooter className="border-t border-border bg-muted/40 px-5 py-4">
+            <SheetFooter className="border-border border-t bg-muted/40 px-5 py-4">
               <div className="flex flex-col gap-3">
                 <div className="grid gap-1.5">
                   <Label htmlFor="order-name" className="text-xs">
@@ -160,32 +173,36 @@ export function OrderSummarySheet() {
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-sm font-medium text-muted-foreground">
+                  <span className="font-medium text-muted-foreground text-sm">
                     {orderSheet.subtotalLabel}
                   </span>
-                  <span className="font-display text-xl font-semibold">
+                  <span className="font-display font-semibold text-xl">
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
 
-                <Button asChild className="h-11 w-full rounded-full" disabled={empty}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={orderSheet.sendButton}
-                  >
-                    <WhatsAppIcon className="size-4" />
-                    {orderSheet.sendButton}
-                  </a>
-                </Button>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={orderSheet.sendButton}
+                  className={cn(
+                    buttonVariants({ variant: "accent", size: "lg" }),
+                    "w-full rounded-full",
+                  )}
+                >
+                  <WhatsAppIcon className="size-4" />
+                  {orderSheet.sendButton}
+                </a>
 
-                <p className="text-center text-xs text-muted-foreground">{orderSheet.note}</p>
+                <p className="text-center text-muted-foreground text-xs">
+                  {orderSheet.note}
+                </p>
 
                 <button
                   type="button"
                   onClick={clear}
-                  className="mx-auto text-xs font-medium text-muted-foreground underline-offset-4 hover:underline"
+                  className="mx-auto font-medium text-muted-foreground text-xs underline-offset-4 hover:underline"
                 >
                   Clear order
                 </button>

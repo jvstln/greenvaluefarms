@@ -1,8 +1,8 @@
-import { siteConfig } from "@/lib/config/site";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { Reveal } from "@/components/shared/reveal";
-import { HandHeart, Leaf, ShieldCheck, Truck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { HandHeart, Leaf, ShieldCheck, Truck } from "lucide-react";
+import { Reveal } from "@/components/shared/reveal";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { siteConfig } from "@/lib/config/site";
 
 /* Icon name -> lucide component. Config stores icon names as strings so the
    config file stays readable for non-developers; this map resolves them. */
@@ -21,7 +21,10 @@ export function WhyUs() {
   const { whyUsSection, whyUs } = siteConfig;
 
   return (
-    <section id="why-us" className="scroll-mt-20 relative overflow-hidden bg-primary py-16 text-primary-foreground sm:py-24">
+    <section
+      id="why-us"
+      className="relative scroll-mt-20 overflow-hidden bg-primary py-16 text-primary-foreground sm:py-24"
+    >
       {/* soft organic shapes */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 right-[-8rem] size-96 rounded-full bg-accent/10 blur-3xl" />
@@ -47,10 +50,10 @@ export function WhyUs() {
                   <span className="flex size-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground shadow-sm transition-transform duration-300 group-hover:-rotate-6">
                     <Icon className="size-6" aria-hidden />
                   </span>
-                  <h3 className="font-display text-xl font-semibold tracking-tight">
+                  <h3 className="font-display font-semibold text-xl tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-primary-foreground/70">
+                  <p className="text-primary-foreground/70 text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </div>

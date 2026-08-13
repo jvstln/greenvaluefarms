@@ -1,7 +1,7 @@
-import { siteConfig } from "@/lib/config/site";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { Reveal } from "@/components/shared/reveal";
 import { ProductCard } from "@/components/shared/product-card";
+import { Reveal } from "@/components/shared/reveal";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { siteConfig } from "@/lib/config/site";
 
 /**
  * Product grid — one card per item in the config, reflowing from 1 column
@@ -21,7 +21,7 @@ export function Products() {
           />
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-7">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.06} className="h-full">
               <ProductCard product={product} />

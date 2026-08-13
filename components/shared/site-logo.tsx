@@ -25,11 +25,11 @@ export function SiteLogo({
         className="size-10 shrink-0"
       />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-lg font-semibold tracking-tight text-foreground">
+        <span className="font-display font-semibold text-foreground text-lg tracking-tight">
           {name}
         </span>
         {showTagline && (
-          <span className="mt-1 text-[0.7rem] font-medium tracking-wide text-muted-foreground">
+          <span className="mt-1 hidden font-medium text-[0.7rem] text-muted-foreground tracking-wide sm:block">
             {tagline}
           </span>
         )}

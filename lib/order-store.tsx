@@ -1,94 +1,27 @@
 "use client";
 
 /**
- * Lightweight client-side order state backed by an external store
- * (localStorage) via useSyncExternalStore — the React-recommended way to
- * read external state. SSR always sees an empty order; the client snapshot
- * hydrates seamlessly, and the order survives a page refresh.
+ * Client-side order state backed by zustand (persist → localStorage). SSR
+ * always renders an empty order; the store rehydrates on the client after
+ * mount, so the order survives a page refresh without any hydration noise.
  *
  * No backend, no payment — a future checkout step could consume `lines` /
  * `totalPrice` from here without any changes.
  */
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react";
-import { siteConfig, type Product } from "@/lib/config/site";
+import { type ReactNode, useEffect, useMemo } from "react";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { useShallow } from "zustand/react/shallow";
+import { type Product, siteConfig } from "@/lib/config/site";
 import type { OrderLine } from "@/lib/types";
 
 const STORAGE_KEY = "greenvaluefarms:order:v1";
 
-/* ------------------------------------------------------------------ */
-/* External store: productId -> quantity, persisted to localStorage.   */
-/* ------------------------------------------------------------------ */
-
-type Quantities = Record<string, number>;
-
-let cache: Quantities | null = null;
-const listeners = new Set<() => void>();
-
-function emitChange() {
-  listeners.forEach((listener) => {
-    listener();
-  });
-}
-
-function subscribe(listener: () => void) {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
-
-function getSnapshot(): Quantities {
-  if (cache === null) {
-    cache = readStoredOrder();
-  }
-  return cache;
-}
-
-function getServerSnapshot(): Quantities {
-  return {};
-}
-
-function commit(next: Quantities) {
-  cache = next;
-  try {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    }
-  } catch {
-    /* storage unavailable — order still works for the session */
-  }
-  emitChange();
-}
-
-function readStoredOrder(): Quantities {
-  if (typeof window === "undefined") return {};
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw) as Quantities;
-    return typeof parsed === "object" && parsed !== null ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/* Context + provider                                                  */
-/* ------------------------------------------------------------------ */
-
-interface OrderStore {
-  /** Resolved order lines (product + qty), filtered to known products. */
-  lines: OrderLine[];
-  /** Total quantity of all items across every line. */
-  totalItems: number;
-  /** Total price of all items (sum of qty × unit price). */
-  totalPrice: number;
+interface OrderStoreState {
+  /** productId -> quantity (0 = not in order). */
+  quantities: Record<string, number>;
+  /** Whether the order summary sheet is open. */
+  isOpen: boolean;
   /** Add `qty` of a product to the order (merges with an existing line). */
   add: (productId: string, qty?: number) => void;
   /** Set the exact quantity for a product (0 removes the line). */
@@ -97,47 +30,101 @@ interface OrderStore {
   remove: (productId: string) => void;
   /** Empty the whole order. */
   clear: () => void;
-  /** Whether the order summary sheet is open. */
+  openSheet: () => void;
+  closeSheet: () => void;
+}
+
+const useOrderStore = create<OrderStoreState>()(
+  persist(
+    (set) => ({
+      quantities: {},
+      isOpen: false,
+      add: (productId, qty = 1) =>
+        set((state) => ({
+          quantities: {
+            ...state.quantities,
+            [productId]: (state.quantities[productId] ?? 0) + Math.max(0, qty),
+          },
+        })),
+      setQty: (productId, qty) =>
+        set((state) => {
+          const quantities = { ...state.quantities };
+          if (qty <= 0) delete quantities[productId];
+          else quantities[productId] = qty;
+          return { quantities };
+        }),
+      remove: (productId) =>
+        set((state) => {
+          const quantities = { ...state.quantities };
+          delete quantities[productId];
+          return { quantities };
+        }),
+      clear: () => set({ quantities: {} }),
+      openSheet: () => set({ isOpen: true }),
+      closeSheet: () => set({ isOpen: false }),
+    }),
+    {
+      name: STORAGE_KEY,
+      partialize: (state) => ({ quantities: state.quantities }),
+      skipHydration: true,
+    },
+  ),
+);
+
+/**
+ * Hydration wrapper — NOT a context provider. Components read the store
+ * directly via `useOrder()` (zustand's store is global); this exists solely
+ * to rehydrate the persisted order from localStorage *after* the client
+ * mounts. With `skipHydration`, SSR and the first client paint both render
+ * an empty order (no hydration mismatch), then the saved order is restored
+ * in one safe re-render.
+ */
+export function OrderProvider({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    void useOrderStore.persist.rehydrate();
+  }, []);
+
+  return <>{children}</>;
+}
+
+export interface OrderStore {
+  /** Resolved order lines (product + qty), filtered to known products. */
+  lines: OrderLine[];
+  /** Total quantity of all items across every line. */
+  totalItems: number;
+  /** Total price of all items (sum of qty × unit price). */
+  totalPrice: number;
+  add: (productId: string, qty?: number) => void;
+  setQty: (productId: string, qty: number) => void;
+  remove: (productId: string) => void;
+  clear: () => void;
   isOpen: boolean;
   openSheet: () => void;
   closeSheet: () => void;
 }
 
-const OrderContext = createContext<OrderStore | null>(null);
-
-export function OrderProvider({ children }: { children: ReactNode }) {
-  const quantities = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot,
+export function useOrder(): OrderStore {
+  const {
+    quantities,
+    isOpen,
+    add,
+    setQty,
+    remove,
+    clear,
+    openSheet,
+    closeSheet,
+  } = useOrderStore(
+    useShallow((state) => ({
+      quantities: state.quantities,
+      isOpen: state.isOpen,
+      add: state.add,
+      setQty: state.setQty,
+      remove: state.remove,
+      clear: state.clear,
+      openSheet: state.openSheet,
+      closeSheet: state.closeSheet,
+    })),
   );
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const add = useCallback((productId: string, qty = 1) => {
-    commit({
-      ...getSnapshot(),
-      [productId]: (getSnapshot()[productId] ?? 0) + Math.max(0, qty),
-    });
-  }, []);
-
-  const setQty = useCallback((productId: string, qty: number) => {
-    const next = { ...getSnapshot() };
-    if (qty <= 0) delete next[productId];
-    else next[productId] = qty;
-    commit(next);
-  }, []);
-
-  const remove = useCallback((productId: string) => {
-    const next = { ...getSnapshot() };
-    delete next[productId];
-    commit(next);
-  }, []);
-
-  const clear = useCallback(() => commit({}), []);
-
-  const openSheet = useCallback(() => setIsOpen(true), []);
-  const closeSheet = useCallback(() => setIsOpen(false), []);
 
   const lines = useMemo<OrderLine[]>(() => {
     const byId = new Map<string, Product>(
@@ -162,7 +149,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     [lines],
   );
 
-  const value = useMemo<OrderStore>(
+  return useMemo(
     () => ({
       lines,
       totalItems,
@@ -175,23 +162,25 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       openSheet,
       closeSheet,
     }),
-    [lines, totalItems, totalPrice, add, setQty, remove, clear, isOpen, openSheet, closeSheet],
+    [
+      lines,
+      totalItems,
+      totalPrice,
+      add,
+      setQty,
+      remove,
+      clear,
+      isOpen,
+      openSheet,
+      closeSheet,
+    ],
   );
-
-  return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;
-}
-
-export function useOrder(): OrderStore {
-  const ctx = useContext(OrderContext);
-  if (!ctx) {
-    throw new Error("useOrder must be used within an OrderProvider");
-  }
-  return ctx;
 }
 
 /** Convenience lookup for a product by id (falls back to the first product). */
 export function getProduct(productId: string): Product {
   return (
-    siteConfig.products.find((p) => p.id === productId) ?? siteConfig.products[0]
+    siteConfig.products.find((p) => p.id === productId) ??
+    siteConfig.products[0]
   );
 }

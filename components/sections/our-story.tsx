@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { siteConfig } from "@/lib/config/site";
 import { Reveal } from "@/components/shared/reveal";
+import { siteConfig } from "@/lib/config/site";
 
 /**
- * Our Story — the family-farm angle. Placeholder copy in the config; swap
- * with the real story before launch.
+ * Our Story — positions the farm as a professional, growing business.
+ * Copy lives in the config; update it there, not here.
  */
 export function OurStory() {
   const { story, storySection, business } = siteConfig;
@@ -15,7 +15,10 @@ export function OurStory() {
         {/* image */}
         <Reveal className="lg:col-span-5">
           <div className="relative mx-auto max-w-md">
-            <div aria-hidden className="absolute -inset-4 -rotate-2 rounded-[2.25rem] border-2 border-primary/30" />
+            <div
+              aria-hidden
+              className="absolute -inset-4 -rotate-2 rounded-[2.25rem] border-2 border-primary/30"
+            />
             <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-border shadow-lg">
               <Image
                 src={story.image.src}
@@ -27,7 +30,10 @@ export function OurStory() {
               />
             </div>
             {/* small floating quote mark */}
-            <div aria-hidden className="absolute -right-4 -bottom-6 flex size-16 rotate-6 items-center justify-center rounded-2xl bg-accent text-2xl text-accent-foreground shadow-lg">
+            <div
+              aria-hidden
+              className="absolute -right-4 -bottom-6 flex size-16 rotate-6 items-center justify-center rounded-2xl bg-accent text-2xl text-accent-foreground shadow-lg"
+            >
               &ldquo;
             </div>
           </div>
@@ -36,28 +42,31 @@ export function OurStory() {
         {/* copy */}
         <div className="lg:col-span-7">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            <p className="font-semibold text-primary text-xs uppercase tracking-[0.2em]">
               {storySection.eyebrow}
             </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
+            <h2 className="mt-3 font-display font-semibold text-3xl tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
               {story.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <div className="mt-5 space-y-4">
               {story.body.map((paragraph) => (
-                <p key={paragraph} className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                <p
+                  key={paragraph}
+                  className="text-base text-muted-foreground leading-relaxed sm:text-lg"
+                >
                   {paragraph}
                 </p>
               ))}
             </div>
           </Reveal>
           <Reveal delay={0.14}>
-            <p className="mt-7 border-l-4 border-accent pl-4 font-display text-xl font-semibold italic text-foreground">
+            <p className="mt-7 border-accent border-l-4 pl-4 font-display font-semibold text-foreground text-xl italic">
               {story.highlight}
             </p>
-            <p className="mt-4 text-sm font-medium text-muted-foreground">
-              — The {business.name} family
+            <p className="mt-4 font-medium text-muted-foreground text-sm">
+              — The {business.name} team
             </p>
           </Reveal>
         </div>

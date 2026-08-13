@@ -1,11 +1,11 @@
-import { siteConfig } from "@/lib/config/site";
+import { AtSign, Camera, Globe, Mail, MapPin, Phone } from "lucide-react";
 import { SiteLogo } from "@/components/shared/site-logo";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
-import { AtSign, Camera, Globe, Mail, MapPin, Phone } from "lucide-react";
+import { siteConfig } from "@/lib/config/site";
 
 /**
- * Footer — contact details, socials, a final WhatsApp CTA and the
- * family-run sign-off. Everything reads from the config file.
+ * Footer — contact details, socials, a final WhatsApp CTA and a clean
+ * sign-off. Everything reads from the config file.
  */
 export function Footer() {
   const { footer, business, nav } = siteConfig;
@@ -17,25 +17,31 @@ export function Footer() {
   ];
 
   return (
-    <footer id="contact" className="relative scroll-mt-20 overflow-hidden bg-primary text-primary-foreground">
+    <footer
+      id="contact"
+      className="relative scroll-mt-20 overflow-hidden bg-primary text-primary-foreground"
+    >
       {/* soft glow */}
-      <div aria-hidden className="pointer-events-none absolute -top-32 right-[-6rem] size-96 rounded-full bg-accent/10 blur-3xl" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-32 right-[-6rem] size-96 rounded-full bg-accent/10 blur-3xl"
+      />
 
-      <div className="wrap relative pb-28 pt-16 sm:pt-20">
+      <div className="wrap relative pt-16 pb-28 sm:pt-20">
         {/* CTA band */}
         <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-primary-foreground/10 bg-primary-foreground/[0.04] p-7 sm:p-9 lg:flex-row lg:items-center">
           <div>
-            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="font-display font-semibold text-2xl tracking-tight sm:text-3xl">
               {footer.ctaHeading}
             </h2>
-            <p className="mt-2 max-w-md text-sm text-primary-foreground/70">
+            <p className="mt-2 max-w-md text-primary-foreground/70 text-sm">
               {footer.ctaText}
             </p>
           </div>
           <WhatsAppButton
             label={footer.ctaButton}
             size="lg"
-            className="h-12 shrink-0 rounded-full bg-accent px-7 text-accent-foreground hover:bg-accent/90"
+            className="h-12 shrink-0 rounded-full px-7"
           />
         </div>
 
@@ -43,8 +49,8 @@ export function Footer() {
         <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr]">
           <div>
             <SiteLogo showTagline={false} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-primary-foreground/70">
-              {business.familyLine}
+            <p className="mt-4 max-w-xs text-primary-foreground/70 text-sm leading-relaxed">
+              {business.aboutLine}
             </p>
             <div className="mt-5 flex items-center gap-3">
               {socialLinks.map(({ href, label, icon: Icon }) => (
@@ -63,7 +69,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer navigation">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60">
+            <h3 className="font-semibold text-primary-foreground/60 text-xs uppercase tracking-[0.2em]">
               {footer.quickLinksHeading}
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -71,7 +77,7 @@ export function Footer() {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-sm text-primary-foreground/80 transition-colors hover:text-accent"
+                    className="text-primary-foreground/80 text-sm transition-colors hover:text-accent"
                   >
                     {item.label}
                   </a>
@@ -81,25 +87,39 @@ export function Footer() {
           </nav>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60">
+            <h3 className="font-semibold text-primary-foreground/60 text-xs uppercase tracking-[0.2em]">
               {footer.contactHeading}
             </h3>
-            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/80">
+            <ul className="mt-4 space-y-3 text-primary-foreground/80 text-sm">
               <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-                <a href={`https://maps.google.com/?q=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">
+                <MapPin
+                  className="mt-0.5 size-4 shrink-0 text-accent"
+                  aria-hidden
+                />
+                <a
+                  href={`https://maps.google.com/?q=${encodeURIComponent(contact.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-accent"
+                >
                   {contact.address}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-accent" aria-hidden />
-                <a href={`tel:${contact.whatsappNumber}`} className="transition-colors hover:text-accent">
+                <a
+                  href={`tel:${contact.whatsappNumber}`}
+                  className="transition-colors hover:text-accent"
+                >
                   {contact.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="size-4 shrink-0 text-accent" aria-hidden />
-                <a href={`mailto:${contact.email}`} className="transition-colors hover:text-accent">
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="transition-colors hover:text-accent"
+                >
                   {contact.email}
                 </a>
               </li>
@@ -108,9 +128,10 @@ export function Footer() {
         </div>
 
         {/* bottom bar */}
-        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-primary-foreground/10 pt-6 text-xs text-primary-foreground/60 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-primary-foreground/10 border-t pt-6 text-primary-foreground/60 text-xs sm:flex-row sm:items-center">
           <p>
-            © {new Date().getFullYear()} {business.name}. {footer.copyrightSuffix}
+            © {new Date().getFullYear()} {business.name}.{" "}
+            {footer.copyrightSuffix}
           </p>
           <p className="flex items-center gap-1.5">
             <AtSign className="size-3.5" aria-hidden />

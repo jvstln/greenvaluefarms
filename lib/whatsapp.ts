@@ -9,8 +9,9 @@
  * customer sending a pre-filled WhatsApp message. A payment step could be
  * slotted in later between "review order" and "send" without touching this.
  */
+
+import { digitsOnly, formatPrice } from "@/lib/format";
 import type { WhatsAppOrderInput } from "@/lib/types";
-import { formatPrice, digitsOnly } from "@/lib/format";
 
 /** Format one order line as "*• Name × qty @ price each — line total*". */
 function formatLine(
@@ -40,16 +41,21 @@ export function buildWhatsAppOrderMessage(input: WhatsAppOrderInput): string {
   }
 
   const currency = lines[0]?.product.currency ?? "NGN";
-  const total = lines.reduce((sum, line) => sum + line.qty * line.product.price, 0);
+  const total = lines.reduce(
+    (sum, line) => sum + line.qty * line.product.price,
+    0,
+  );
 
   const parts: string[] = [];
 
   if (intro) parts.push(intro);
   parts.push("");
 
-  parts.push(...lines.map((line) =>
-    formatLine(line.product.name, line.qty, line.product.price, currency),
-  ));
+  parts.push(
+    ...lines.map((line) =>
+      formatLine(line.product.name, line.qty, line.product.price, currency),
+    ),
+  );
 
   parts.push("");
   parts.push(`Total: ${formatPrice(total, currency)}`);
@@ -58,7 +64,8 @@ export function buildWhatsAppOrderMessage(input: WhatsAppOrderInput): string {
   // Optional customer details (name / delivery notes) — appended if provided.
   const detailLines: string[] = [];
   if (details?.name?.trim()) detailLines.push(`Name: ${details.name.trim()}`);
-  if (details?.notes?.trim()) detailLines.push(`Notes: ${details.notes.trim()}`);
+  if (details?.notes?.trim())
+    detailLines.push(`Notes: ${details.notes.trim()}`);
   if (detailLines.length > 0) {
     parts.push(...detailLines);
     parts.push("");

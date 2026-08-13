@@ -1,12 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 /**
- * Accessible quantity stepper. The buttons are real <button>s so they work
- * with the keyboard (tab + enter/space) out of the box.
+ * Compact quantity stepper — sized to sit comfortably beside a `sm` button
+ * (e.g. the product card's "Add to order"). The buttons are real <button>s
+ * so they work with the keyboard (tab + enter/space) out of the box.
  */
 export function QuantityStepper({
   value,
@@ -26,35 +27,37 @@ export function QuantityStepper({
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border border-border bg-background p-1",
+        "inline-flex items-center rounded-full border border-border bg-background p-0.5",
         className,
       )}
     >
       <Button
         type="button"
         variant="ghost"
-        size="icon-sm"
+        size="icon-xs"
+        className="rounded-full"
         aria-label="Decrease quantity"
         disabled={value <= min}
         onClick={() => onChange(clamp(value - 1))}
       >
-        <Minus />
+        <Minus className="size-3" />
       </Button>
       <span
         aria-live="polite"
-        className="w-8 text-center text-sm font-semibold tabular-nums"
+        className="min-w-6 text-center font-semibold text-sm tabular-nums"
       >
         {value}
       </span>
       <Button
         type="button"
         variant="ghost"
-        size="icon-sm"
+        size="icon-xs"
+        className="rounded-full"
         aria-label="Increase quantity"
         disabled={value >= max}
         onClick={() => onChange(clamp(value + 1))}
       >
-        <Plus />
+        <Plus className="size-3" />
       </Button>
     </div>
   );

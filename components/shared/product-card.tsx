@@ -1,88 +1,82 @@
 "use client";
 
-import { useState } from "react";
+import { Check, Plus } from "lucide-react";
 import Image from "next/image";
-import type { Product } from "@/lib/config/site";
-import { useOrder } from "@/lib/order-store";
-import { formatPrice } from "@/lib/format";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { QuantityStepper } from "@/components/shared/quantity-stepper";
-import { Check, ShoppingBasket } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import type { Product } from "@/lib/config/site";
+import { formatPrice } from "@/lib/format";
+import { useOrder } from "@/lib/order-store";
 
 /**
- * One product in the grid: image, name, description, price + unit, a local
- * quantity stepper and an "Add to Order" button. Adding pushes the selected
- * quantity into the shared order store (see lib/order-store.tsx).
+ * One product in the grid. The quantity stepper reflects what's actually in
+ * the order, and the action button switches between "Add to order" and
+ * "Add more" as the shopper builds their basket. Data flows through the
+ * shared order store (see lib/order-store.tsx).
  */
 export function ProductCard({ product }: { product: Product }) {
-  const { add } = useOrder();
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
+  const { lines, add, setQty } = useOrder();
+  const [justAdded, setJustAdded] = useState(false);
+
+  const line = lines.find((l) => l.product.id === product.id);
+  const quantity = line?.qty ?? 0;
 
   const handleAdd = () => {
-    add(product.id, qty);
-    setAdded(true);
-    setQty(1);
-    window.setTimeout(() => setAdded(false), 1600);
+    add(product.id, 1);
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1200);
   };
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      {/* image */}
-      <div className="relative overflow-hidden">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Image
           src={product.image}
           alt={product.name}
-          width={640}
-          height={800}
-          loading="lazy"
-          className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          fill
+          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {product.tags.length > 0 && (
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-            {product.tags.map((tag) => (
-              <Badge key={tag} className="rounded-full bg-primary text-primary-foreground">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+          <span className="absolute top-4 left-4 rounded-lg border-2 border-accent-foreground/10 bg-accent px-3 py-1 font-bold text-accent-foreground text-xs uppercase tracking-wide shadow-md">
+            {product.tags[0]}
+          </span>
         )}
       </div>
 
-      {/* copy */}
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display text-xl font-semibold tracking-tight">
+        <div>
+          <h3 className="font-display font-semibold text-foreground text-lg leading-snug">
             {product.name}
           </h3>
+          <p className="mt-1 text-muted-foreground text-sm leading-relaxed">
+            {product.description}
+          </p>
         </div>
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          {product.description}
-        </p>
 
-        <div className="mt-auto flex items-baseline gap-1.5">
-          <span className="font-display text-2xl font-semibold text-primary">
+        <div className="mt-auto flex items-baseline gap-1.5 pt-1">
+          <span className="font-display font-semibold text-primary text-xl">
             {formatPrice(product.price, product.currency)}
           </span>
-          <span className="text-sm text-muted-foreground">{product.unit}</span>
+          <span className="text-muted-foreground text-xs">{product.unit}</span>
         </div>
 
-        {/* actions */}
-        <div className="flex items-center justify-between gap-3">
-          <QuantityStepper value={qty} onChange={setQty} min={1} />
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <QuantityStepper
+            value={quantity}
+            onChange={(next) => setQty(product.id, next)}
+            min={0}
+          />
           <Button
             type="button"
+            size="sm"
+            variant={quantity > 0 ? "outline" : "default"}
             onClick={handleAdd}
-            className="flex-1 rounded-full"
-            aria-label={`Add ${product.name} to order`}
+            className="shrink-0 rounded-full"
           >
-            {added ? (
-              <Check data-slot="icon" />
-            ) : (
-              <ShoppingBasket data-slot="icon" />
-            )}
-            {added ? "Added" : "Add to Order"}
+            {justAdded ? <Check data-slot="icon" /> : <Plus data-slot="icon" />}
+            {quantity > 0 ? "Add more" : "Add to order"}
           </Button>
         </div>
       </div>

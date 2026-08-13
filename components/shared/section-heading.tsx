@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Consistent section heading: small eyebrow, display serif heading,
- * optional supporting description. `tone="inverted"` for use on the
- * deep-green sections (Why Us, Footer).
+ * Consistent section heading: small eyebrow with a leading dash, display
+ * serif heading, optional supporting description. `tone="inverted"` for use
+ * on the deep-green sections (Why Us, Footer).
  */
 export function SectionHeading({
   eyebrow,
@@ -21,30 +21,28 @@ export function SectionHeading({
   tone?: "default" | "inverted";
   className?: string;
 }) {
+  const inverted = tone === "inverted";
   const centered = align === "center";
 
   return (
     <div
-      className={cn(
-        "max-w-2xl",
-        centered && "mx-auto text-center",
-        className,
-      )}
+      className={cn("max-w-2xl", centered && "mx-auto text-center", className)}
     >
       {eyebrow && (
-        <p
+        <span
           className={cn(
-            "mb-3 text-xs font-semibold uppercase tracking-[0.2em]",
-            tone === "inverted" ? "text-accent" : "text-primary",
+            "inline-flex items-center gap-2 font-semibold text-xs uppercase tracking-[0.2em]",
+            inverted ? "text-accent" : "text-primary",
           )}
         >
+          <span className="h-px w-6 bg-current" aria-hidden="true" />
           {eyebrow}
-        </p>
+        </span>
       )}
       <h2
         className={cn(
-          "font-display text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-[1.1]",
-          tone === "inverted" ? "text-primary-foreground" : "text-foreground",
+          "mt-3 font-display font-semibold text-3xl leading-[1.1] tracking-tight sm:text-4xl md:text-[2.75rem]",
+          inverted ? "text-primary-foreground" : "text-foreground",
         )}
       >
         {title}
@@ -53,9 +51,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mt-4 text-base leading-relaxed sm:text-lg",
-            tone === "inverted"
-              ? "text-primary-foreground/75"
-              : "text-muted-foreground",
+            inverted ? "text-primary-foreground/80" : "text-muted-foreground",
           )}
         >
           {description}

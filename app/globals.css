@@ -59,26 +59,26 @@
 
 :root {
   /* Core palette — deep farm green + warm amber on a cream base */
-  --background: #faf7f0;        /* warm off-white / cream (not stark white) */
-  --foreground: #22281f;        /* warm charcoal (not pure black)          */
-  --card: #fdfbf5;              /* warm white for raised cards             */
+  --background: #faf7f0; /* warm off-white / cream (not stark white) */
+  --foreground: #22281f; /* warm charcoal (not pure black)          */
+  --card: #fdfbf5; /* warm white for raised cards             */
   --card-foreground: #22281f;
   --popover: #fdfbf5;
   --popover-foreground: #22281f;
 
-  --primary: #2f5233;           /* deep farm green — headers, nav, actions  */
+  --primary: #2f5233; /* deep farm green — headers, nav, actions  */
   --primary-foreground: #faf7f0;
-  --secondary: #e3ead9;         /* soft field-green for tonal surfaces      */
+  --secondary: #e3ead9; /* soft field-green for tonal surfaces      */
   --secondary-foreground: #23341f;
 
-  --muted: #efeadd;             /* soft sage / beige for section bg & cards */
-  --muted-foreground: #5c6253;  /* warm gray-green, readable on --muted     */
-  --accent: #e8a33d;            /* warm amber / egg-yolk — the pop of color */
+  --muted: #efeadd; /* soft sage / beige for section bg & cards */
+  --muted-foreground: #5c6253; /* warm gray-green, readable on --muted     */
+  --accent: #e8a33d; /* warm amber / egg-yolk — the pop of color */
   --accent-foreground: #3a2c0c; /* dark brown for text sitting on amber     */
 
   --destructive: #b3402f;
 
-  --border: #e4ddcb;            /* warm, slightly tan border                */
+  --border: #e4ddcb; /* warm, slightly tan border                */
   --input: #e4ddcb;
   --ring: #2f5233;
 
@@ -93,14 +93,14 @@
 }
 
 .dark {
-  --background: #161a14;        /* deep green-black                       */
-  --foreground: #efeadd;        /* cream text on dark                     */
+  --background: #161a14; /* deep green-black                       */
+  --foreground: #efeadd; /* cream text on dark                     */
   --card: #1d231b;
   --card-foreground: #efeadd;
   --popover: #1d231b;
   --popover-foreground: #efeadd;
 
-  --primary: #7fae7f;           /* lighter green so it reads on dark bg    */
+  --primary: #7fae7f; /* lighter green so it reads on dark bg    */
   --primary-foreground: #10160e;
   --secondary: #26301f;
   --secondary-foreground: #dbe3cf;
@@ -143,11 +143,22 @@
     color: var(--accent-foreground);
   }
 
+  /* Buttons (native + role-based) always show a pointer, matching link behaviour */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
   /* Display serif (Fraunces) gets its crafted flavour from the SOFT axis */
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-fraunces);
     font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 55, "WONK" 0;
+    font-variation-settings:
+      "SOFT" 55,
+      "WONK" 0;
     letter-spacing: -0.015em;
   }
 }

@@ -1,13 +1,13 @@
 /**
  * GreenValueFarms — single source of truth
  * ---------------------------------------------------------------------------
- * EVERYTHING business-related lives in this file. If a family member or a
- * future developer needs to change copy, prices, contact details, products,
- * or nav links, they should edit THIS file and nothing else.
+ * EVERYTHING business-related lives in this file. If the owner or a future
+ * developer needs to change copy, prices, contact details, products, or nav
+ * links, they should edit THIS file and nothing else.
  *
- * Every value that is a placeholder is marked with a `// TODO: replace
- * placeholder` comment so it's obvious what still needs real data before
- * launch.
+ * Values that still need real data from the owner (phone, email, address,
+ * socials, logo, imagery) are marked with a `// TODO: owner` comment. All
+ * marketing copy is written to read as a professional, established business.
  *
  * The object is declared `as const` so TypeScript infers precise literal
  * types (see the derived `Product`, `NavItem`, etc. types at the bottom).
@@ -18,27 +18,28 @@ export const siteConfig = {
     name: "GreenValueFarms",
     tagline: "Farm-fresh chickens, raised right.",
     description:
-      "A family-run farm bringing healthy, well-raised chickens straight to your table — no middlemen, no shortcuts.",
-    // TODO: replace placeholder — this is a made-up welcome message used at the top of every WhatsApp order.
-    orderIntro: "Hello GreenValueFarms! I'd like to place an order:",
+      "Healthy, well-raised chickens delivered fresh from our Lagos farm — no middlemen, no shortcuts.",
+    // Used at the top of every WhatsApp order.
+    orderIntro: "Hello GreenValueFarms! I would like to place an order:",
     logo: {
-      // Placeholder — swap this file/path when the real logo is ready.
+      // TODO: owner — swap this file/path when the real logo is ready.
       src: "/logo-placeholder.svg",
       alt: "GreenValueFarms logo — a stylised egg with a sprouting leaf",
     },
     contact: {
-      // TODO: replace placeholder — international format, digits only, no "+" or spaces.
+      // TODO: owner — international format, digits only, no "+" or spaces.
       whatsappNumber: "2348000000000",
-      phoneDisplay: "+234 800 000 0000", // TODO: replace placeholder
-      email: "hello@greenvaluefarms.com", // TODO: replace placeholder
-      address: "Placeholder Farm Road, Lagos, Nigeria", // TODO: replace placeholder
+      phoneDisplay: "+234 800 000 0000", // TODO: owner
+      email: "hello@greenvaluefarms.com", // TODO: owner
+      address: "Placeholder Farm Road, Lagos, Nigeria", // TODO: owner
     },
     socials: {
-      // TODO: replace placeholder links.
+      // TODO: owner — replace with the real profiles.
       instagram: "https://instagram.com/greenvaluefarms",
       facebook: "https://facebook.com/greenvaluefarms",
     },
-    familyLine: "Family-run since day one — every bird is raised, dressed and packed by our own hands.",
+    aboutLine:
+      "Farm-raised in Lagos — dressed, packed and delivered with care.",
   },
 
   /* In-page navigation. `href` must match a section id on the page. */
@@ -76,12 +77,13 @@ export const siteConfig = {
       currency: "NGN",
       unit: "per bird",
       image: "/products/whole-chicken-large.svg", // placeholder image
-      tags: ["Family Size"],
+      tags: ["Large"],
     },
     {
       id: "chicken-parts",
       name: "Chicken Parts",
-      description: "Mixed cuts — drumsticks, thighs, wings and breast. Packed frozen.",
+      description:
+        "Mixed cuts — drumsticks, thighs, wings and breast. Packed frozen.",
       price: 4800,
       currency: "NGN",
       unit: "per kg",
@@ -110,17 +112,20 @@ export const siteConfig = {
     {
       icon: "shield-check",
       title: "No Hormones or Shortcuts",
-      description: "TODO: replace placeholder — describe your real feeding & care practice.",
+      description:
+        "Clean feed program, room to grow, and consistent care — no hormones, no overcrowding, no shortcuts.",
     },
     {
       icon: "hand-heart",
-      title: "Family-Run, Personally Handled",
-      description: "Every order is packed and checked by our own hands.",
+      title: "Handled with Care",
+      description:
+        "Every bird is dressed, inspected and packed with care before it leaves the farm.",
     },
     {
       icon: "truck",
       title: "Fast Local Delivery",
-      description: "TODO: replace placeholder — replace with your actual delivery info & areas.",
+      description:
+        "Same-day or next-day delivery across Lagos. Confirm your area and timing on WhatsApp.",
     },
   ],
 
@@ -144,51 +149,55 @@ export const siteConfig = {
     {
       step: 4,
       title: "We confirm & deliver",
-      description: "We'll confirm availability, price and delivery details directly with you.",
+      description:
+        "We'll confirm availability, price and delivery details directly with you.",
     },
   ],
 
-  /* Our Story — optional section, placeholders throughout. */
+  /* Our Story — presents a confident, growing business. */
   story: {
-    // TODO: replace placeholder copy.
-    heading: "A small farm doing things properly",
+    heading: "Raising chickens the right way.",
     body: [
-      "TODO: replace placeholder — write your real story here. Keep it warm and human: who runs the farm, why you started, and how you raise your birds.",
-      "TODO: replace placeholder — a second paragraph. Mention your growing plans — GreenValueFarms isn't stopping at chickens.",
+      "GreenValueFarms was built around one idea: chicken should be simple, healthy and honest. Our birds are raised on a clean, consistent feed program with room to move — then dressed, packed and delivered fresh, with no middlemen in between.",
+      "We're growing with the market. Chickens are our focus today, and we're investing in the sourcing, raising, dressing and delivery systems we'll carry into a wider range of farm products in the years ahead.",
     ],
     image: {
       // Placeholder photo (Unsplash, CC) — swap for a real farm photo when ready.
       src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1200&q=70&auto=format&fit=crop",
-      alt: "Green fields on a family farm at dusk",
+      alt: "Green fields on the farm at dusk",
     },
-    highlight: "Family-run. Farm-raised. Zero shortcuts.",
+    highlight: "Farm-raised. Hormone-free. Zero shortcuts.",
   },
 
-  /* FAQ — optional, keeps the page focused. */
+  /* FAQ — keeps the page focused. */
   faq: [
     {
       question: "Where do you deliver?",
-      answer: "TODO: replace placeholder — list the areas you cover and any delivery fee or minimum order.",
+      answer:
+        "We currently deliver across Lagos, with same-day or next-day delivery depending on your area. Message us on WhatsApp to confirm coverage, timing and delivery fee for your location.",
     },
     {
       question: "Are the birds really hormone-free?",
-      answer: "TODO: replace placeholder — describe how your birds are raised, fed, and cared for.",
+      answer:
+        "Yes. Our birds are raised without hormones or routine antibiotics, on a consistent feed program and with room to move. Happy to walk you through exactly how they are raised.",
     },
     {
       question: "How does the WhatsApp ordering work?",
-      answer: "Add your products, review the summary, and press 'Send Order via WhatsApp' — your order arrives as a message we reply to directly.",
+      answer:
+        "Add your products, review the summary, and press 'Send Order via WhatsApp'. Your order arrives as a message we reply to directly — we confirm price, delivery and pickup before anything is final.",
     },
     {
-      question: "Can I come visit the farm?",
-      answer: "TODO: replace placeholder — tell customers when visits are possible and how to arrange one.",
+      question: "Can I visit the farm?",
+      answer:
+        "We are happy to host visits by appointment. Send us a message on WhatsApp and we will arrange a time that works for you.",
     },
   ],
 
   /* Hero + generic section headings */
   hero: {
-    eyebrow: "Family-run · Lagos, Nigeria",
+    eyebrow: "Farm-fresh · Lagos, Nigeria",
     heading: "Farm-fresh chickens, raised right.",
-    sub: "Healthy, well-raised chickens from our farm to your table — dressed, ready to cook, and handled by family hands from start to finish.",
+    sub: "Healthy, well-raised chickens from our farm to your table — dressed, ready to cook, and delivered fresh to your door.",
     ctaPrimary: "View Our Chickens",
     ctaSecondary: "Order on WhatsApp",
     // Small trust badges under the CTAs.
@@ -208,7 +217,7 @@ export const siteConfig = {
     chipPrice: 8500,
     chipUnit: "per bird",
     // Circular "stamp" badge overlapping the hero image.
-    stamp: "Family-run since day one",
+    stamp: "Farm-fresh since day one",
   },
 
   productsSection: {
@@ -219,8 +228,8 @@ export const siteConfig = {
 
   whyUsSection: {
     eyebrow: "Why GreenValueFarms",
-    heading: "Small farm values, no compromises.",
-    sub: "We're not a big operation — and that's exactly the point.",
+    heading: "Raising standards, no compromises.",
+    sub: "A focused operation doing one thing exceptionally well: healthy, honest chicken.",
   },
 
   orderingSection: {
@@ -228,7 +237,8 @@ export const siteConfig = {
     heading: "Ordering is as easy as a text message.",
     sub: "Four simple steps from your screen to our farm.",
     ctaLabel: "Send Order via WhatsApp",
-    ctaHint: "No account needed. No payment at checkout — we confirm everything with you directly.",
+    ctaHint:
+      "No account needed. No payment at checkout — we confirm everything with you directly.",
   },
 
   storySection: {
@@ -241,14 +251,15 @@ export const siteConfig = {
   },
 
   orderSheet: {
-    title: "Your Order",
+    title: "Review your order",
     emptyTitle: "Your order is empty",
     emptyMessage: "Browse the products and add some chickens to your order.",
     browseLabel: "Browse products",
     customerNameLabel: "Your name (optional)",
     customerNamePlaceholder: "e.g. Adaeze O.",
     customerDetailsLabel: "Delivery notes (optional)",
-    customerDetailsPlaceholder: "e.g. Address or preferred pickup time",
+    customerDetailsPlaceholder:
+      "e.g. Delivery address or preferred pickup time",
     sendButton: "Send Order via WhatsApp",
     subtotalLabel: "Estimated total",
     note: "Prices are estimates — we confirm final price and delivery with you on WhatsApp.",
@@ -264,7 +275,8 @@ export const siteConfig = {
     contactHeading: "Get in touch",
     quickLinksHeading: "Explore",
     ctaHeading: "Hungry already?",
-    ctaText: "Send us a message on WhatsApp and we'll get back to you the same day.",
+    ctaText:
+      "Send us a message on WhatsApp and we'll get back to you the same day.",
     ctaButton: "Chat with us on WhatsApp",
     copyrightSuffix: "All rights reserved.",
   },

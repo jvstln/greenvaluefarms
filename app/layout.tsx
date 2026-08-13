@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { FloatingOrderBar } from "@/components/shared/floating-order-bar";
+import { OrderSummarySheet } from "@/components/shared/order-summary-sheet";
 import { siteConfig } from "@/lib/config/site";
 import { OrderProvider } from "@/lib/order-store";
-import { OrderSummarySheet } from "@/components/shared/order-summary-sheet";
-import { FloatingOrderBar } from "@/components/shared/floating-order-bar";
 import "./globals.css";
 
 /* Fraunces — characterful variable serif used for all headings. */
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${fraunces.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col">
         <OrderProvider>
           {children}
           <OrderSummarySheet />
