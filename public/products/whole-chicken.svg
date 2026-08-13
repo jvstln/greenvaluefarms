@@ -1,0 +1,61 @@
+<svg width="640" height="800" viewBox="0 0 640 800" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder image — whole chicken (medium)">
+  <!-- Placeholder product art: replace with a real photo (point the config at a
+       new file/URL) when photography is ready. Same composition is reused for
+       every product — only the background hue and label chip change. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5F0E3"/>
+      <stop offset="1" stop-color="#EAE2CD"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#bg)"/>
+
+  <!-- sun -->
+  <circle cx="505" cy="150" r="54" fill="#E8A33D" opacity="0.28"/>
+
+  <!-- rolling hills -->
+  <path d="M0 640 C 140 570, 260 600, 400 640 C 520 674, 600 660, 640 620 V800 H0 Z" fill="#DED5BC" opacity="0.7"/>
+  <path d="M0 700 C 160 640, 320 660, 460 700 C 540 722, 600 716, 640 692 V800 H0 Z" fill="#D3C8AC"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="325" cy="668" rx="150" ry="16" fill="#2F5233" opacity="0.12"/>
+
+  <!-- hen (flat-illustration placeholder glyph) -->
+  <g>
+    <!-- tail feathers -->
+    <ellipse cx="470" cy="505" rx="36" ry="16" fill="#2F5233" transform="rotate(16 470 505)"/>
+    <ellipse cx="480" cy="526" rx="31" ry="14" fill="#2F5233" opacity="0.85" transform="rotate(6 480 526)"/>
+    <ellipse cx="464" cy="542" rx="33" ry="14" fill="#2F5233" opacity="0.7" transform="rotate(-8 464 542)"/>
+    <!-- body -->
+    <ellipse cx="330" cy="502" rx="122" ry="86" fill="#2F5233"/>
+    <!-- neck -->
+    <ellipse cx="240" cy="414" rx="30" ry="62" fill="#2F5233" transform="rotate(-16 240 414)"/>
+    <!-- head -->
+    <circle cx="212" cy="372" r="26" fill="#2F5233"/>
+    <!-- comb -->
+    <circle cx="196" cy="340" r="8" fill="#E8A33D"/>
+    <circle cx="208" cy="335" r="8" fill="#E8A33D"/>
+    <circle cx="220" cy="341" r="8" fill="#E8A33D"/>
+    <!-- beak + wattle -->
+    <polygon points="188,369 161,375 188,381" fill="#E8A33D"/>
+    <circle cx="188" cy="393" r="6" fill="#E8A33D"/>
+    <!-- eye -->
+    <circle cx="201" cy="368" r="4" fill="#FAF7F0"/>
+    <!-- legs -->
+    <rect x="298" y="588" width="12" height="64" rx="5" fill="#2F5233"/>
+    <rect x="348" y="588" width="12" height="64" rx="5" fill="#2F5233"/>
+    <rect x="286" y="646" width="46" height="9" rx="4.5" fill="#2F5233"/>
+    <rect x="338" y="646" width="46" height="9" rx="4.5" fill="#2F5233"/>
+  </g>
+
+  <!-- label chip -->
+  <g>
+    <rect x="452" y="640" width="150" height="34" rx="17" fill="#FAF7F0"/>
+    <text x="527" y="662" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-style="italic" fill="#2F5233">1.2–1.5kg</text>
+  </g>
+
+  <!-- honest placeholder marker -->
+  <g opacity="0.35">
+    <text x="28" y="60" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="3" fill="#5c6253">PLACEHOLDER IMAGE</text>
+  </g>
+</svg>

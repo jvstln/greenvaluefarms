@@ -1,0 +1,44 @@
+<svg width="640" height="800" viewBox="0 0 640 800" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder image — chicken parts">
+  <!-- Placeholder product art: replace with a real photo when ready.
+       Warm terracotta-tinted variant. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6EFE0"/>
+      <stop offset="1" stop-color="#EFE2C6"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#bg)"/>
+
+  <circle cx="505" cy="150" r="54" fill="#C96F4A" opacity="0.22"/>
+
+  <path d="M0 640 C 140 570, 260 600, 400 640 C 520 674, 600 660, 640 620 V800 H0 Z" fill="#E2CDB0" opacity="0.75"/>
+  <path d="M0 700 C 160 640, 320 660, 460 700 C 540 722, 600 716, 640 692 V800 H0 Z" fill="#D8C09E"/>
+
+  <!-- two drumsticks on a small platter -->
+  <ellipse cx="320" cy="660" rx="180" ry="26" fill="#2F5233" opacity="0.10"/>
+
+  <g transform="rotate(-18 250 470)">
+    <!-- meat -->
+    <path d="M250 470 C 220 462 206 486 206 514 C 206 548 228 576 262 580 C 296 584 320 556 318 520 C 316 486 282 478 250 470 Z" fill="#2F5233"/>
+    <!-- bone tip -->
+    <path d="M250 476 L 250 452 L 258 452 L 258 476 Z" fill="#FAF7F0"/>
+    <circle cx="254" cy="452" r="4" fill="#FAF7F0"/>
+  </g>
+  <g transform="rotate(8 400 500)">
+    <!-- meat -->
+    <path d="M400 500 C 370 492 356 516 356 544 C 356 578 378 606 412 610 C 446 614 470 586 468 550 C 466 516 432 508 400 500 Z" fill="#2F5233" opacity="0.85"/>
+    <!-- bone tip -->
+    <path d="M400 506 L 400 482 L 408 482 L 408 506 Z" fill="#FAF7F0"/>
+    <circle cx="404" cy="482" r="4" fill="#FAF7F0"/>
+  </g>
+
+  <!-- label chip -->
+  <g>
+    <rect x="452" y="640" width="150" height="34" rx="17" fill="#FAF7F0"/>
+    <text x="527" y="662" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-style="italic" fill="#2F5233">per kg</text>
+  </g>
+
+  <g opacity="0.35">
+    <text x="28" y="60" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="3" fill="#5c6253">PLACEHOLDER IMAGE</text>
+  </g>
+</svg>

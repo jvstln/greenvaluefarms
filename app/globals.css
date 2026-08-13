@@ -1,26 +1,171 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   GreenValueFarms design tokens
+   ---------------------------------------------------------------------------
+   The whole palette is defined here as semantic CSS variables and mapped to
+   Tailwind theme colors below. Never hardcode a raw hex in a component —
+   use `bg-background`, `text-primary`, `bg-accent`, etc. instead.
+
+   Dark-mode values are defined (.dark block) even though dark mode isn't
+   shipped day one, so nothing needs restructuring later.
+--------------------------------------------------------------------------- */
 
 @theme inline {
+  /* Typography */
+  --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-fraunces);
+  --font-heading: var(--font-fraunces);
+  --font-mono: var(--font-geist-mono);
+
+  /* Semantic colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Radius scale — intentionally generous so cards/images feel soft & crafted */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Core palette — deep farm green + warm amber on a cream base */
+  --background: #faf7f0;        /* warm off-white / cream (not stark white) */
+  --foreground: #22281f;        /* warm charcoal (not pure black)          */
+  --card: #fdfbf5;              /* warm white for raised cards             */
+  --card-foreground: #22281f;
+  --popover: #fdfbf5;
+  --popover-foreground: #22281f;
+
+  --primary: #2f5233;           /* deep farm green — headers, nav, actions  */
+  --primary-foreground: #faf7f0;
+  --secondary: #e3ead9;         /* soft field-green for tonal surfaces      */
+  --secondary-foreground: #23341f;
+
+  --muted: #efeadd;             /* soft sage / beige for section bg & cards */
+  --muted-foreground: #5c6253;  /* warm gray-green, readable on --muted     */
+  --accent: #e8a33d;            /* warm amber / egg-yolk — the pop of color */
+  --accent-foreground: #3a2c0c; /* dark brown for text sitting on amber     */
+
+  --destructive: #b3402f;
+
+  --border: #e4ddcb;            /* warm, slightly tan border                */
+  --input: #e4ddcb;
+  --ring: #2f5233;
+
+  --radius: 0.875rem;
+
+  /* Chart colors (unused today, mapped for completeness) */
+  --chart-1: #2f5233;
+  --chart-2: #e8a33d;
+  --chart-3: #8aa17f;
+  --chart-4: #c96f4a;
+  --chart-5: #5f6b52;
+}
+
+.dark {
+  --background: #161a14;        /* deep green-black                       */
+  --foreground: #efeadd;        /* cream text on dark                     */
+  --card: #1d231b;
+  --card-foreground: #efeadd;
+  --popover: #1d231b;
+  --popover-foreground: #efeadd;
+
+  --primary: #7fae7f;           /* lighter green so it reads on dark bg    */
+  --primary-foreground: #10160e;
+  --secondary: #26301f;
+  --secondary-foreground: #dbe3cf;
+
+  --muted: #232a1f;
+  --muted-foreground: #a9ae9a;
+
+  --accent: #e8a33d;
+  --accent-foreground: #241a04;
+
+  --destructive: #ff9c8a;
+  --border: #2c3327;
+  --input: #2c3327;
+  --ring: #8aa17f;
+
+  --chart-1: #7fae7f;
+  --chart-2: #e8a33d;
+  --chart-3: #8aa17f;
+  --chart-4: #c96f4a;
+  --chart-5: #a9ae9a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* keep anchored sections clear of the sticky header */
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  /* Display serif (Fraunces) gets its crafted flavour from the SOFT axis */
+  h1, h2, h3, h4 {
+    font-family: var(--font-fraunces);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 55, "WONK" 0;
+    letter-spacing: -0.015em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Reusable page-width wrapper — keeps every section's gutters consistent */
+@utility wrap {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+/* Soft, subtle grain texture used behind hero / story sections */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
 }
