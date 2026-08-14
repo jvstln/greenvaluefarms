@@ -15,7 +15,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 24,
+  y = 16,
 }: {
   children: ReactNode;
   className?: string;
@@ -40,9 +40,9 @@ export function Reveal({
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.7,
           delay,
-          ease: "power2.out",
+          ease: "power3.out",
           scrollTrigger: {
             trigger: el,
             start: "top 85%",

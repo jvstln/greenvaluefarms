@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import Image from "next/image";
+import { PrintRule } from "@/components/shared/print-rule";
 import { Reveal } from "@/components/shared/reveal";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { siteConfig } from "@/lib/config/site";
 import { formatPrice } from "@/lib/format";
 
 /**
- * Hero — a Lagos market pitch. Oversized condensed headline on paper stock,
+ * Hero — a nigerian market pitch. Oversized condensed headline on paper stock,
  * a single hard-framed photo with a corner stamp, and a printed price ticket
  * that leans on the image. No blobs, no grain, no decorative frames.
  */
@@ -29,6 +30,7 @@ export function Hero() {
             <h1 className="mt-6 max-w-2xl text-balance font-black font-display text-[2.75rem] uppercase leading-[0.95] tracking-tight sm:text-6xl xl:text-7xl">
               {hero.heading}
             </h1>
+            <PrintRule />
           </Reveal>
 
           <Reveal delay={0.1}>

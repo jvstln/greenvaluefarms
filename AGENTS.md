@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # GreenValueFarms
 
-Single-page Next.js site for a Lagos chicken farm: a marketing landing page plus a WhatsApp ordering flow. Next 16.3.0, React 19, Tailwind v4, Biome. No backend, no payments — an order is just a pre-filled `wa.me` WhatsApp message. **Use `pnpm`** (repo is pnpm-only; `pnpm@10.30.3` pinned in `package.json`).
+Single-page Next.js site for a nigerian chicken farm: a marketing landing page plus a WhatsApp ordering flow. Next 16.3.0, React 19, Tailwind v4, Biome. No backend, no payments — an order is just a pre-filled `wa.me` WhatsApp message. **Use `pnpm`** (repo is pnpm-only; `pnpm@10.30.3` pinned in `package.json`).
 
 ## Commands
 - `pnpm dev` — dev server on :3000
@@ -32,13 +32,14 @@ Single-page Next.js site for a Lagos chicken farm: a marketing landing page plus
 - Tailwind v4 is CSS-first — there is **no `tailwind.config`**; tokens are `@theme inline` vars in `app/globals.css`. Never hardcode colors in a component — use semantic tokens (`bg-background`, `text-primary`, `font-display`).
 - Prices are plain integers in smallest unit (naira, `NGN`). The WhatsApp number in config must be digits-only (no `+`/spaces) — `buildWhatsAppUrl` strips non-digits as a safety net.
 - `reactCompiler: true` in `next.config.ts` — React Compiler is on; don't add manual memoization it would flag as noise.
-- `next/image` remote source is whitelisted in `next.config.ts`: only `images.unsplash.com` (hero/story placeholder photos). Product images are local SVGs in `/public/products`. New remote hosts require a config change.
+- `next/image` remote source is whitelisted in `next.config.ts`: only `images.unsplash.com` (hero/story/product photos, real Unsplash URLs set in `lib/config/site.ts`). New remote hosts require a config change.
 - GSAP scroll-reveal lives in `components/shared/reveal.tsx` (`useGSAP` + ScrollTrigger, honors `prefers-reduced-motion`).
 - Fonts via `next/font/google`: **Archivo** (display) + **Hanken Grotesk** (body) + **IBM Plex Mono** (numerals/labels), exposed as CSS vars `--font-archivo` / `--font-hanken` / `--font-plex-mono`.
 - `gvf/` is a stray untracked `node_modules` artifact (excluded in `tsconfig.json`) — ignore it.
 
-## Design system — "Lagos market / dispatch board"
+## Design system — "nigerian market / dispatch board"
 - Visual identity: warm paper bg, deep-green ink, market-yellow accent, rust for annotations. Tight print-ticket corners, hard offset shadows (`shadow-[…]`), dashed ticket rules. See `--background`/`--primary`/`--accent`/`--rust` tokens in `app/globals.css`.
-- **No AI-UI tells allowed** — this is a deliberate, hard rule. Do not reintroduce: blurred gradient blobs (`blur-3xl`), grain texture, rotated outline frames, circular "stamp" badges, hand-drawn SVG underlines, eyebrow-dash headings, dashed-step connector lines, or hover-lift icon cards.
+- **No AI-UI tells allowed** — this is a deliberate, hard rule. Do not reintroduce: blurred gradient blobs (`blur-3xl`), heavy dark grain, rotated outline frames, circular "stamp" badges, hand-drawn SVG underlines, eyebrow-dash headings, dashed-step connector lines, or hover-lift icon cards. The subtle folded-paper texture on `body` (`app/globals.css`) is an intentional paper-stock texture — keep it, never replace it with noisy grain.
+- The hero has a signature **print rule** (`components/shared/print-rule.tsx`): a sharp ink/yellow/rust ledger line that draws itself in on load. Don't swap it for a hand-drawn scribble.
 - Type rules: headings use `font-display font-bold` (Archivo, uppercase for the hero), prices/counts use `font-mono` + `tabular-nums`, eyebrows are mono uppercase (`font-mono text-[0.7rem] uppercase tracking-[0.2em]`, rust or accent).
 - Buttons: squared (`rounded-lg`, not `rounded-full`). `default`/`accent` variants carry a print-style hard shadow (`shadow-[0_3px_0_0_…]`). Cards use `rounded-xl` + hard offset shadow. Products/WhyUs/HowToOrder render as numbered ledger/ticket rows.

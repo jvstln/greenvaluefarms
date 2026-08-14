@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
-    // Only images.unsplash.com is allowed as a remote source, and ONLY for
-    // the placeholder photos (hero / story). The product placeholders are
-    // local SVGs in /public/products and need no remote config.
+    // Only images.unsplash.com is allowed as a remote source, for the hero /
+    // story / product photos (real URLs set in lib/config/site.ts). The logos
+    // are local SVGs in /public and need no remote config.
     remotePatterns: [
       {
         protocol: "https",

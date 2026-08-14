@@ -18,20 +18,22 @@ export const siteConfig = {
     name: "GreenValueFarms",
     tagline: "Farm-fresh chickens, raised right.",
     description:
-      "Healthy, well-raised chickens delivered fresh from our Lagos farm — no middlemen, no shortcuts.",
+      "Healthy, well-raised chickens delivered fresh from our farm — no middlemen, no shortcuts.",
     // Used at the top of every WhatsApp order.
     orderIntro: "Hello GreenValueFarms! I would like to place an order:",
     logo: {
       // TODO: owner — swap this file/path when the real logo is ready.
-      src: "/logo-placeholder.svg",
-      alt: "GreenValueFarms logo — a stylised egg with a sprouting leaf",
+      src: "/logo-icon.svg",
+      // Light-on-dark variant (greens replaced with white) for the footer.
+      lightSrc: "/logo-icon-light.svg",
+      alt: "GreenValueFarms logo — a stylised hen with vine tendrils",
     },
     contact: {
       // TODO: owner — international format, digits only, no "+" or spaces.
       whatsappNumber: "2348000000000",
       phoneDisplay: "+234 800 000 0000", // TODO: owner
       email: "hello@greenvaluefarms.com", // TODO: owner
-      address: "Placeholder Farm Road, Lagos, Nigeria", // TODO: owner
+      address: "No 140 Orba Road Nsukka, Enugu, Nigeria", // TODO: owner
     },
     socials: {
       // TODO: owner — replace with the real profiles.
@@ -39,7 +41,7 @@ export const siteConfig = {
       facebook: "https://facebook.com/greenvaluefarms",
     },
     aboutLine:
-      "Farm-raised in Lagos — dressed, packed and delivered with care.",
+      "Farm-raised in Nigeria — dressed, packed and delivered with care.",
   },
 
   /* In-page navigation. `href` must match a section id on the page. */
@@ -55,18 +57,19 @@ export const siteConfig = {
      Products — price is stored in the smallest currency unit as a plain
      number; `currency` is the ISO code. The order summary / WhatsApp
      message derives all totals from these numbers, so keep them accurate.
-     `image` paths point at placeholder SVGs in /public/products — swap the
-     file (or point at a real photo) when real imagery is ready.
+     `image` is a real Unsplash photo (the host is whitelisted in
+     next.config.ts) — edit the URL here if the owner wants a different shot.
   ------------------------------------------------------------------------- */
   products: [
     {
       id: "whole-chicken-medium",
       name: "Whole Chicken (Medium)",
       description: "Approx. 1.2–1.5kg, farm-raised, dressed and ready to cook.",
-      price: 8500,
+      price: 10500,
       currency: "NGN",
       unit: "per bird",
-      image: "/products/whole-chicken.svg", // placeholder image
+      image:
+        "https://images.unsplash.com/photo-1672787153720-e85fe802fd9f?w=800&q=70&auto=format&fit=crop",
       tags: ["Best Seller"],
     },
     {
@@ -76,7 +79,8 @@ export const siteConfig = {
       price: 12000,
       currency: "NGN",
       unit: "per bird",
-      image: "/products/whole-chicken-large.svg", // placeholder image
+      image:
+        "https://images.unsplash.com/photo-1672787153655-0c19308dcc60?w=800&q=70&auto=format&fit=crop",
       tags: ["Large"],
     },
     {
@@ -84,20 +88,22 @@ export const siteConfig = {
       name: "Chicken Parts",
       description:
         "Mixed cuts — drumsticks, thighs, wings and breast. Packed frozen.",
-      price: 4800,
+      price: 7500,
       currency: "NGN",
       unit: "per kg",
-      image: "/products/chicken-parts.svg", // placeholder image
+      image:
+        "https://images.unsplash.com/photo-1759493321741-883fbf9f433c?w=800&q=70&auto=format&fit=crop",
       tags: [],
     },
     {
       id: "live-birds",
       name: "Live Birds",
       description: "Healthy, fully-grown birds for breeding or home slaughter.",
-      price: 6500,
+      price: 8500,
       currency: "NGN",
       unit: "per bird",
-      image: "/products/live-birds.svg", // placeholder image
+      image:
+        "https://images.unsplash.com/photo-1556316918-880f9e893822?w=800&q=70&auto=format&fit=crop",
       tags: ["By Request"],
     },
   ],
@@ -121,7 +127,7 @@ export const siteConfig = {
     {
       title: "Fast Local Delivery",
       description:
-        "Same-day or next-day delivery across Lagos. Confirm your area and timing on WhatsApp.",
+        "Same-day or next-day delivery across Nigeria. Confirm your area and timing on WhatsApp.",
     },
   ],
 
@@ -170,7 +176,7 @@ export const siteConfig = {
     {
       question: "Where do you deliver?",
       answer:
-        "We currently deliver across Lagos, with same-day or next-day delivery depending on your area. Message us on WhatsApp to confirm coverage, timing and delivery fee for your location.",
+        "We currently deliver across Nigeria, with same-day or next-day delivery depending on your area. Message us on WhatsApp to confirm coverage, timing and delivery fee for your location.",
     },
     {
       question: "Are the birds really hormone-free?",
@@ -191,7 +197,7 @@ export const siteConfig = {
 
   /* Hero + generic section headings */
   hero: {
-    eyebrow: "Farm-fresh · Lagos, Nigeria",
+    eyebrow: "Farm-fresh · Enugu, Nigeria",
     heading: "Farm-fresh chickens, raised right.",
     sub: "Healthy, well-raised chickens from our farm to your table — dressed, ready to cook, and delivered fresh to your door.",
     ctaPrimary: "View Our Chickens",
@@ -204,13 +210,13 @@ export const siteConfig = {
     ],
     image: {
       // Placeholder photo (Unsplash, CC) — swap for a real farm/chicken photo when ready.
-      src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400&q=70&auto=format&fit=crop",
-      alt: "Golden sunlight over a farm field at dusk",
+      src: "https://images.unsplash.com/photo-1612170153139-6f881ff067e0?w=1400&q=70&auto=format&fit=crop",
+      alt: "A farm-raised brown chicken pecking on green grass",
     },
     // Little floating chip that overlaps the hero image.
     chipTitle: "Whole Chicken",
     chipSub: "from",
-    chipPrice: 8500,
+    chipPrice: 10500,
     chipUnit: "per bird",
     // Circular "stamp" badge overlapping the hero image.
     stamp: "Farm-fresh since day one",

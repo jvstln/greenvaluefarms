@@ -42,7 +42,7 @@ export function Footer() {
         {/* columns */}
         <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr]">
           <div>
-            <SiteLogo showTagline={false} />
+            <SiteLogo showTagline={false} tone="inverted" />
             <p className="mt-4 max-w-xs text-primary-foreground/70 text-sm leading-relaxed">
               {business.aboutLine}
             </p>
