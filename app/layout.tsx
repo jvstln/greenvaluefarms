@@ -3,6 +3,7 @@ import { Archivo, Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { FloatingOrderBar } from "@/components/shared/floating-order-bar";
 import { OrderSummarySheet } from "@/components/shared/order-summary-sheet";
 import { siteConfig } from "@/lib/config/site";
+import { LightboxProvider } from "@/lib/lightbox-store";
 import { OrderProvider } from "@/lib/order-store";
 import "./globals.css";
 
@@ -52,9 +53,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <OrderProvider>
-          {children}
-          <OrderSummarySheet />
-          <FloatingOrderBar />
+          <LightboxProvider>
+            {children}
+            <OrderSummarySheet />
+            <FloatingOrderBar />
+          </LightboxProvider>
         </OrderProvider>
       </body>
     </html>

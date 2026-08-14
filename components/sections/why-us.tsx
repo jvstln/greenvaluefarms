@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { siteConfig } from "@/lib/config/site";
@@ -23,6 +24,13 @@ export function WhyUs() {
               description={whyUsSection.sub}
               tone="inverted"
             />
+            <a
+              href="/about-us"
+              className="mt-8 inline-flex items-center gap-2 border-primary-foreground/20 border-t border-dashed pt-4 font-medium font-mono text-[0.8rem] text-accent uppercase tracking-[0.15em] underline-offset-4 transition-colors hover:text-primary-foreground hover:underline"
+            >
+              {whyUsSection.ctaLabel}
+              <ArrowRight className="size-4" aria-hidden />
+            </a>
           </Reveal>
 
           <Reveal delay={0.05} className="lg:col-span-7">

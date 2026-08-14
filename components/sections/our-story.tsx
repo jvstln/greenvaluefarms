@@ -1,14 +1,24 @@
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { aboutUs } from "@/lib/config/about-us";
 import { siteConfig } from "@/lib/config/site";
 
 /**
- * Our Story — one hard-framed photo beside the copy. Copy lives in the
- * config; update it there, not here.
+ * Our Story — one hard-framed photo beside the copy. Copy lives in
+ * `lib/config/about-us.ts`; update it there, not here.
+ *
+ * Rendered on the home page (with a link to the full `/about-us` page) and
+ * reused at the top of the About page itself (link hidden via `showStoryLink`).
  */
-export function OurStory() {
-  const { story, storySection, business } = siteConfig;
+export function OurStory({
+  showStoryLink = true,
+}: {
+  showStoryLink?: boolean;
+}) {
+  const { story, storySection } = aboutUs;
+  const { business } = siteConfig;
 
   return (
     <section id="story" className="scroll-mt-20 bg-muted/50 py-16 sm:py-24">
@@ -56,9 +66,19 @@ export function OurStory() {
             <p className="mt-8 max-w-md border-accent border-l-4 pl-5 font-bold font-display text-xl tracking-tight">
               {story.highlight}
             </p>
-            <p className="mt-4 font-mono text-muted-foreground text-xs uppercase tracking-[0.18em]">
-              — The {business.name} team
-            </p>
+            {showStoryLink ? (
+              <a
+                href="/about-us"
+                className="mt-5 inline-flex items-center gap-2 font-semibold text-primary text-sm underline-offset-4 transition-colors hover:text-rust hover:underline"
+              >
+                Read the full story
+                <ArrowRight className="size-4" aria-hidden />
+              </a>
+            ) : (
+              <p className="mt-4 font-mono text-muted-foreground text-xs uppercase tracking-[0.18em]">
+                — The {business.name} team
+              </p>
+            )}
           </Reveal>
         </div>
       </div>

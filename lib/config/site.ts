@@ -18,22 +18,20 @@ export const siteConfig = {
     name: "GreenValueFarms",
     tagline: "Farm-fresh chickens, raised right.",
     description:
-      "Healthy, well-raised chickens delivered fresh from our farm — no middlemen, no shortcuts.",
+      "Healthy, well-raised birds delivered fresh from our farm — no middlemen, no shortcuts.",
     // Used at the top of every WhatsApp order.
     orderIntro: "Hello GreenValueFarms! I would like to place an order:",
     logo: {
-      // TODO: owner — swap this file/path when the real logo is ready.
       src: "/logo-icon.svg",
       // Light-on-dark variant (greens replaced with white) for the footer.
       lightSrc: "/logo-icon-light.svg",
       alt: "GreenValueFarms logo — a stylised hen with vine tendrils",
     },
     contact: {
-      // TODO: owner — international format, digits only, no "+" or spaces.
-      whatsappNumber: "2348000000000",
-      phoneDisplay: "+234 800 000 0000", // TODO: owner
+      whatsappNumber: "2348105805818", // Plane number without formatting and without +
+      phoneDisplay: "+234 810 580 5818",
       email: "hello@greenvaluefarms.com", // TODO: owner
-      address: "No 140 Orba Road Nsukka, Enugu, Nigeria", // TODO: owner
+      address: "No 140 Orba Road Nsukka, Enugu, Nigeria",
     },
     socials: {
       // TODO: owner — replace with the real profiles.
@@ -44,12 +42,14 @@ export const siteConfig = {
       "Farm-raised in Nigeria — dressed, packed and delivered with care.",
   },
 
-  /* In-page navigation. `href` must match a section id on the page. */
+  /* In-page navigation. `href` is either a page route (e.g. "/about-us") or a
+     section id ("#products"). Section anchors must match a section id on the
+     page they're rendered on. */
   nav: [
     { label: "Products", href: "#products" },
     { label: "Why Us", href: "#why-us" },
     { label: "How to Order", href: "#ordering" },
-    { label: "Our Story", href: "#story" },
+    { label: "Our Story", href: "/about-us" },
     { label: "Contact", href: "#contact" },
   ],
 
@@ -65,7 +65,7 @@ export const siteConfig = {
       id: "whole-chicken-medium",
       name: "Whole Chicken (Medium)",
       description: "Approx. 1.2–1.5kg, farm-raised, dressed and ready to cook.",
-      price: 10500,
+      price: 11500,
       currency: "NGN",
       unit: "per bird",
       image:
@@ -99,7 +99,7 @@ export const siteConfig = {
       id: "live-birds",
       name: "Live Birds",
       description: "Healthy, fully-grown birds for breeding or home slaughter.",
-      price: 8500,
+      price: 10000,
       currency: "NGN",
       unit: "per bird",
       image:
@@ -136,7 +136,7 @@ export const siteConfig = {
     {
       step: 1,
       title: "Pick your products",
-      description: "Browse our chickens and choose what you need.",
+      description: "Browse our birds and choose what you need.",
     },
     {
       step: 2,
@@ -155,21 +155,6 @@ export const siteConfig = {
         "We'll confirm availability, price and delivery details directly with you.",
     },
   ],
-
-  /* Our Story — presents a confident, growing business. */
-  story: {
-    heading: "Raising chickens the right way.",
-    body: [
-      "GreenValueFarms was built around one idea: chicken should be simple, healthy and honest. Our birds are raised on a clean, consistent feed program with room to move — then dressed, packed and delivered fresh, with no middlemen in between.",
-      "We're growing with the market. Chickens are our focus today, and we're investing in the sourcing, raising, dressing and delivery systems we'll carry into a wider range of farm products in the years ahead.",
-    ],
-    image: {
-      // Placeholder photo (Unsplash, CC) — swap for a real farm photo when ready.
-      src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1200&q=70&auto=format&fit=crop",
-      alt: "Green fields on the farm at dusk",
-    },
-    highlight: "Farm-raised. Hormone-free. Zero shortcuts.",
-  },
 
   /* FAQ — keeps the page focused. */
   faq: [
@@ -199,7 +184,7 @@ export const siteConfig = {
   hero: {
     eyebrow: "Farm-fresh · Enugu, Nigeria",
     heading: "Farm-fresh chickens, raised right.",
-    sub: "Healthy, well-raised chickens from our farm to your table — dressed, ready to cook, and delivered fresh to your door.",
+    sub: "Healthy, well-raised birds from our farm to your table — dressed, ready to cook, and delivered fresh to your door.",
     ctaPrimary: "View Our Chickens",
     ctaSecondary: "Order on WhatsApp",
     // Small trust badges under the CTAs.
@@ -216,7 +201,7 @@ export const siteConfig = {
     // Little floating chip that overlaps the hero image.
     chipTitle: "Whole Chicken",
     chipSub: "from",
-    chipPrice: 10500,
+    chipPrice: 11500,
     chipUnit: "per bird",
     // Circular "stamp" badge overlapping the hero image.
     stamp: "Farm-fresh since day one",
@@ -224,14 +209,15 @@ export const siteConfig = {
 
   productsSection: {
     eyebrow: "Our Produce",
-    heading: "Choose your chickens",
+    heading: "Choose your birds",
     sub: "Every bird is raised on the farm, dressed to order, and priced honestly.",
   },
 
   whyUsSection: {
     eyebrow: "Why GreenValueFarms",
     heading: "Raising standards, no compromises.",
-    sub: "A focused operation doing one thing exceptionally well: healthy, honest chicken.",
+    sub: "A focused operation doing one thing exceptionally well: healthy, honest birds.",
+    ctaLabel: "Don't believe us? Meet the team.",
   },
 
   orderingSection: {
@@ -243,10 +229,6 @@ export const siteConfig = {
       "No account needed. No payment at checkout — we confirm everything with you directly.",
   },
 
-  storySection: {
-    eyebrow: "Our Story",
-  },
-
   faqSection: {
     eyebrow: "Good to know",
     heading: "Frequently asked questions",
@@ -255,7 +237,7 @@ export const siteConfig = {
   orderSheet: {
     title: "Review your order",
     emptyTitle: "Your order is empty",
-    emptyMessage: "Browse the products and add some chickens to your order.",
+    emptyMessage: "Browse the products and add some birds to your order.",
     browseLabel: "Browse products",
     customerNameLabel: "Your name (optional)",
     customerNamePlaceholder: "e.g. Adaeze O.",

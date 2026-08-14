@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GreenValueFarms
 
-## Getting Started
+The website for a Nigerian chicken farm: a marketing landing page that sells the farm, plus a WhatsApp ordering flow that needs no backend, no accounts, and no payments.
 
-First, run the development server:
+An order is a pre-filled `wa.me` deep link — a customer builds an order in a slide-over panel and sends it straight to the farm's WhatsApp. The whole site is static and **config-driven**: every product, price, and line of copy lives in two TypeScript config files, so editing the business is a data change, not a code change.
+
+## Tech stack
+
+- **Next.js 16.3.0** — App Router, React 19, React Compiler, Turbopack
+- **Tailwind CSS v4** — CSS-first (no `tailwind.config`); tokens live in `app/globals.css`
+- **Biome** — linting + formatting (replaces ESLint & Prettier)
+- **zustand** — client-side order cart, persisted to `localStorage`
+- **GSAP + ScrollTrigger** — scroll-reveal and the hero's self-drawing print rule
+- **Base UI** (`@base-ui/react`) — UI primitives, installed via shadcn 4.17 (not Radix)
+- **lucide-react** — icons
+- **next/font** — Archivo (display), Hanken Grotesk (body), IBM Plex Mono (numerals)
+
+No env vars, no test suite, no CI.
+
+## Getting started
+
+The repo is **pnpm-only** (pinned `pnpm@10.30.3`). Don't use npm/yarn.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The landing page is `/`, and the About / Our Story page is `/about-us`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> On a fresh clone, run `pnpm dev` or `pnpm build` once before trusting `tsc` — route-aware globals (`LayoutProps<'/route'>`, `PageProps<'/route'>`) are generated into `.next/dev/types` by the dev/build step.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command                  | What it does                                                        |
+| ------------------------ | ------------------------------------------------------------------- |
+| `pnpm dev`               | Dev server on :3000                                                  |
+| `pnpm build`             | Production build (Turbopack)                                         |
+| `pnpm start`             | Serve the production build                                           |
+| `pnpm lint`              | Biome check — read-only                                              |
+| `pnpm format`            | `biome format --write` only                                          |
+| `pnpm check`             | `biome check --write` — autofixes incl. Tailwind class sorting (`useSortedClasses`) and import organization |
+| `pnpm exec tsc --noEmit` | Typecheck                                                            |
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+  page.tsx              Landing page — composes home sections
+  about-us/page.tsx     About / Our Story page — composes the about sections
+  layout.tsx            Root layout: fonts, header/footer shell, order provider
+  globals.css           Design tokens, base styles, @utility wrap
+components/
+  sections/             Page-level sections (hero, products, why-us, …)
+  sections/about/       Sections used only on the About page
+  shared/               Cross-page pieces (reveal, section-heading, print-rule, team-photo, …)
+  ui/                   Base UI primitives (button, sheet, input, …)
+lib/
+  config/site.ts        Single source of truth for all business data (home + ordering)
+  config/about-us.ts    Single source of truth for company data (About page + story teaser)
+  order-store.tsx       zustand cart (persisted), useOrder() hook, OrderProvider
+  whatsapp.ts           Pure helpers: WhatsApp message + wa.me URL
+  format.ts             formatPrice, digitsOnly
+  types.ts              Order-flow types
+  utils.ts              cn(), isTodo()
+public/
+  logo-icon.svg         Logo (light/dark variants)
+  team/*.jpg            Team portraits (placeholder JPEGs until real photos land)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How ordering works
 
-## Deploy on Vercel
+There is **no backend and no payment step**. The flow is:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. The customer adds products via the product cards / quantity stepper — `useOrder()` in `lib/order-store.tsx` (a **global zustand store**, not a React context; `OrderProvider` only rehydrates `localStorage` after mount).
+2. The floating order bar / cart button opens the order summary sheet (`components/shared/order-summary-sheet.tsx`) to review quantities and add optional name / delivery notes.
+3. `lib/whatsapp.ts` formats a readable message and builds `https://wa.me/<number>?text=…` — the flow ends when the customer opens WhatsApp.
+4. Prices are confirmed by the farm directly on WhatsApp.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Gotchas:
+
+- Prices are plain integers in the smallest currency unit (naira, `NGN`).
+- The WhatsApp number in config is digits-only (no `+` / spaces); `buildWhatsAppUrl` strips non-digits as a safety net.
+- The persisted cart key is `greenvaluefarms:order:v1` — bump it if the persisted shape ever changes.
+- A future real checkout can consume `lines` / `totalPrice` from the store without touching the UI.
+
+## Where data lives
+
+**All business copy, prices, products, contact, nav, and FAQ** → `lib/config/site.ts`. Declared `as const`; `Product`, `NavItem`, etc. are derived types. **Never hardcode business data in a component.**
+
+**Everything about the company** (narrative, values, milestones, team, and the home page's "Our Story" teaser) → `lib/config/about-us.ts`.
+
+Values still waiting on the owner are marked `// TODO: owner` (e.g. real contact email, milestone years, team social URLs). Team photos live in `public/team/*.jpg`; `components/shared/team-photo.tsx` shows a monogram ticket until a file exists, so a missing photo can't break the page.
+
+## Design system — "Nigerian market / dispatch board"
+
+Warm paper background, deep-green ink, market-yellow accent, rust for annotations. Tight print-ticket corners, hard offset shadows, dashed ticket rules, and mono ledger labels throughout.
+
+- Headings: `font-display font-bold` (Archivo; uppercase on the hero and page headers). Prices/counts: `font-mono` + `tabular-nums`. Eyebrows: mono uppercase (`text-[0.7rem] uppercase tracking-[0.2em]`).
+- Buttons are squared (`rounded-lg`), with a print-style hard shadow on `default`/`accent` variants. Cards use `rounded-xl` + a hard offset shadow.
+- Numbered ledger rows (`No. 0X`, `Step 0X`, …) separate by dashed ticket rules; the hero price ticket adds a mini barcode.
+- `components/shared/section-heading.tsx` is the shared section header (mono eyebrow + block mark, `tone="inverted"` for deep-green bands).
+- The only deliberate `rounded-full` exceptions: the floating order bar and the quantity stepper.
+
+The design rules are deliberately strict — the codebase does **not** use blurred gradient blobs, heavy grain, circular "stamp" badges, hand-drawn underlines, or hover-lift icon cards. Keep new UI inside the existing system.
+
+## Images & fonts
+
+- `next/image` remote sources are whitelisted in `next.config.ts` — currently only `images.unsplash.com` (hero / story / product photos, URLs set in config). Adding another host requires a config change.
+- Fonts load via `next/font/google` as CSS vars `--font-archivo` / `--font-hanken` / `--font-plex-mono`, mapped to `font-display` / `font-sans` / `font-mono` in `app/globals.css`.
+
+## Deployment
+
+A fully static Next.js build — any host that supports Next.js works (Vercel, Netlify, a VPS with `next start`). No env vars or build-time secrets are required.
+
+## Development notes
+
+- `"use client"` only where needed (zustand, GSAP, sheets); everything else stays a server component.
+- `reactCompiler: true` is on — don't add manual memoization that React Compiler would flag.
+- Section gutters come from the `wrap` utility (`@utility wrap` in `app/globals.css`); anchored sections carry `scroll-mt-20` to clear the sticky header.
+- `gvf/` (if it ever appears) is a stray artifact excluded in `tsconfig.json` / `biome.json` — never create or commit it.
