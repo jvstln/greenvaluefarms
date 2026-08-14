@@ -7,20 +7,22 @@
 /* ---------------------------------------------------------------------------
    GreenValueFarms design tokens
    ---------------------------------------------------------------------------
-   The whole palette is defined here as semantic CSS variables and mapped to
-   Tailwind theme colors below. Never hardcode a raw hex in a component —
-   use `bg-background`, `text-primary`, `bg-accent`, etc. instead.
+   Identity: a Lagos poultry market / dispatch board. Warm paper stock, deep
+   green ink, a market-yellow accent and rust for annotations. Type is
+   Archivo (condensed, confident) for display, Hanken Grotesk for body and
+   IBM Plex Mono for numerals, labels and ticket data.
 
-   Dark-mode values are defined (.dark block) even though dark mode isn't
-   shipped day one, so nothing needs restructuring later.
+   The whole palette is defined here as semantic CSS variables and mapped to
+   Tailwind theme colors. Never hardcode a raw hex in a component — use
+   `bg-background`, `text-primary`, `bg-accent`, etc. instead.
 --------------------------------------------------------------------------- */
 
 @theme inline {
   /* Typography */
-  --font-sans: var(--font-plus-jakarta);
-  --font-display: var(--font-fraunces);
-  --font-heading: var(--font-fraunces);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-hanken);
+  --font-display: var(--font-archivo);
+  --font-heading: var(--font-archivo);
+  --font-mono: var(--font-plex-mono);
 
   /* Semantic colors */
   --color-background: var(--background);
@@ -37,6 +39,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-rust: var(--rust);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -47,7 +50,7 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Radius scale — intentionally generous so cards/images feel soft & crafted */
+  /* Radius scale — tight, printed-ticket feel. No pillowy corners. */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -58,69 +61,72 @@
 }
 
 :root {
-  /* Core palette — deep farm green + warm amber on a cream base */
-  --background: #faf7f0; /* warm off-white / cream (not stark white) */
-  --foreground: #22281f; /* warm charcoal (not pure black)          */
-  --card: #fdfbf5; /* warm white for raised cards             */
-  --card-foreground: #22281f;
-  --popover: #fdfbf5;
-  --popover-foreground: #22281f;
+  color-scheme: light;
 
-  --primary: #2f5233; /* deep farm green — headers, nav, actions  */
-  --primary-foreground: #faf7f0;
-  --secondary: #e3ead9; /* soft field-green for tonal surfaces      */
-  --secondary-foreground: #23341f;
+  /* Core palette — deep green ink + market yellow on warm paper */
+  --background: #f6f1e7; /* warm paper stock                          */
+  --foreground: #1b231b; /* deep green-black ink                       */
+  --card: #fbf7ec; /* slightly lighter paper for raised cards   */
+  --card-foreground: #1b231b;
+  --popover: #fbf7ec;
+  --popover-foreground: #1b231b;
 
-  --muted: #efeadd; /* soft sage / beige for section bg & cards */
-  --muted-foreground: #5c6253; /* warm gray-green, readable on --muted     */
-  --accent: #e8a33d; /* warm amber / egg-yolk — the pop of color */
-  --accent-foreground: #3a2c0c; /* dark brown for text sitting on amber     */
+  --primary: #1f4630; /* deep farm green — dark sections, actions   */
+  --primary-foreground: #f6f1e7;
+  --secondary: #dfe6d2; /* soft field green for tonal surfaces       */
+  --secondary-foreground: #24331f;
+
+  --muted: #ece6d5; /* warm khaki for banded backgrounds          */
+  --muted-foreground: #60675b; /* readable warm grey-green                */
+  --accent: #f4a93c; /* market yellow — the pop of colour          */
+  --accent-foreground: #2a1c04; /* dark brown for text on yellow            */
+  --rust: #c2542f; /* annotation / ticket-tag red                */
 
   --destructive: #b3402f;
 
-  --border: #e4ddcb; /* warm, slightly tan border                */
-  --input: #e4ddcb;
-  --ring: #2f5233;
+  --border: #ddd4bd; /* hairline on paper                         */
+  --input: #ddd4bd;
+  --ring: #1f4630;
 
-  --radius: 0.875rem;
+  --radius: 0.625rem;
 
   /* Chart colors (unused today, mapped for completeness) */
-  --chart-1: #2f5233;
-  --chart-2: #e8a33d;
+  --chart-1: #1f4630;
+  --chart-2: #f4a93c;
   --chart-3: #8aa17f;
-  --chart-4: #c96f4a;
+  --chart-4: #c2542f;
   --chart-5: #5f6b52;
 }
 
 .dark {
-  --background: #161a14; /* deep green-black                       */
-  --foreground: #efeadd; /* cream text on dark                     */
-  --card: #1d231b;
-  --card-foreground: #efeadd;
-  --popover: #1d231b;
-  --popover-foreground: #efeadd;
+  --background: #141a12; /* deep green-black                       */
+  --foreground: #efeada; /* paper text on dark                     */
+  --card: #1b231b;
+  --card-foreground: #efeada;
+  --popover: #1b231b;
+  --popover-foreground: #efeada;
 
-  --primary: #7fae7f; /* lighter green so it reads on dark bg    */
+  --primary: #8fae8a; /* lighter green so it reads on dark bg    */
   --primary-foreground: #10160e;
   --secondary: #26301f;
   --secondary-foreground: #dbe3cf;
 
-  --muted: #232a1f;
-  --muted-foreground: #a9ae9a;
+  --muted: #222a1e;
+  --muted-foreground: #a7ad98;
 
-  --accent: #e8a33d;
+  --accent: #f4a93c;
   --accent-foreground: #241a04;
 
   --destructive: #ff9c8a;
-  --border: #2c3327;
-  --input: #2c3327;
-  --ring: #8aa17f;
+  --border: #2b3223;
+  --input: #2b3223;
+  --ring: #8fae8a;
 
-  --chart-1: #7fae7f;
-  --chart-2: #e8a33d;
+  --chart-1: #8fae8a;
+  --chart-2: #f4a93c;
   --chart-3: #8aa17f;
-  --chart-4: #c96f4a;
-  --chart-5: #a9ae9a;
+  --chart-4: #c2542f;
+  --chart-5: #a7ad98;
 }
 
 @layer base {
@@ -132,6 +138,7 @@
     @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem; /* keep anchored sections clear of the sticky header */
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -147,36 +154,21 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+    touch-action: manipulation;
   }
 
-  /* Display serif (Fraunces) gets its crafted flavour from the SOFT axis */
+  /* Display type (Archivo) — confident, tight, a little condensed */
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-fraunces);
+    font-family: var(--font-archivo);
     font-optical-sizing: auto;
-    font-variation-settings:
-      "SOFT" 55,
-      "WONK" 0;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
 }
 
 /* Reusable page-width wrapper — keeps every section's gutters consistent */
 @utility wrap {
   @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
-}
-
-/* Soft, subtle grain texture used behind hero / story sections */
-@utility grain {
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.5;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  }
 }

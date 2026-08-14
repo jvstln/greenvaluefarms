@@ -34,5 +34,11 @@ Single-page Next.js site for a Lagos chicken farm: a marketing landing page plus
 - `reactCompiler: true` in `next.config.ts` — React Compiler is on; don't add manual memoization it would flag as noise.
 - `next/image` remote source is whitelisted in `next.config.ts`: only `images.unsplash.com` (hero/story placeholder photos). Product images are local SVGs in `/public/products`. New remote hosts require a config change.
 - GSAP scroll-reveal lives in `components/shared/reveal.tsx` (`useGSAP` + ScrollTrigger, honors `prefers-reduced-motion`).
-- Fonts via `next/font/google`: Fraunces (display) + Plus Jakarta Sans (body), exposed as CSS vars.
+- Fonts via `next/font/google`: **Archivo** (display) + **Hanken Grotesk** (body) + **IBM Plex Mono** (numerals/labels), exposed as CSS vars `--font-archivo` / `--font-hanken` / `--font-plex-mono`.
 - `gvf/` is a stray untracked `node_modules` artifact (excluded in `tsconfig.json`) — ignore it.
+
+## Design system — "Lagos market / dispatch board"
+- Visual identity: warm paper bg, deep-green ink, market-yellow accent, rust for annotations. Tight print-ticket corners, hard offset shadows (`shadow-[…]`), dashed ticket rules. See `--background`/`--primary`/`--accent`/`--rust` tokens in `app/globals.css`.
+- **No AI-UI tells allowed** — this is a deliberate, hard rule. Do not reintroduce: blurred gradient blobs (`blur-3xl`), grain texture, rotated outline frames, circular "stamp" badges, hand-drawn SVG underlines, eyebrow-dash headings, dashed-step connector lines, or hover-lift icon cards.
+- Type rules: headings use `font-display font-bold` (Archivo, uppercase for the hero), prices/counts use `font-mono` + `tabular-nums`, eyebrows are mono uppercase (`font-mono text-[0.7rem] uppercase tracking-[0.2em]`, rust or accent).
+- Buttons: squared (`rounded-lg`, not `rounded-full`). `default`/`accent` variants carry a print-style hard shadow (`shadow-[0_3px_0_0_…]`). Cards use `rounded-xl` + hard offset shadow. Products/WhyUs/HowToOrder render as numbered ledger/ticket rows.

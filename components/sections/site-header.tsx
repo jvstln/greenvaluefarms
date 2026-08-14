@@ -28,7 +28,7 @@ export function SiteHeader() {
       key={item.href}
       href={item.href}
       onClick={() => setMenuOpen(false)}
-      className="font-medium text-foreground/80 text-sm transition-colors hover:text-primary"
+      className="font-medium text-foreground/80 text-sm decoration-2 decoration-rust underline-offset-4 transition-colors hover:text-primary hover:underline"
     >
       {item.label}
     </a>
@@ -56,7 +56,7 @@ export function SiteHeader() {
             type="button"
             variant="outline"
             size="default"
-            className="hidden rounded-full md:inline-flex"
+            className="hidden rounded-lg md:inline-flex"
             onClick={openSheet}
             aria-label={`Review order, ${totalItems} item${totalItems === 1 ? "" : "s"}`}
           >
@@ -72,7 +72,7 @@ export function SiteHeader() {
             href="#products"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "hidden rounded-full sm:inline-flex",
+              "hidden rounded-lg sm:inline-flex",
             )}
           >
             Order Now
@@ -119,7 +119,7 @@ export function SiteHeader() {
                       <Button
                         onClick={openSheet}
                         variant="outline"
-                        className="rounded-full"
+                        className="rounded-lg"
                         aria-label="Review your order"
                       >
                         <ShoppingBasket data-slot="icon" />
@@ -139,7 +139,7 @@ export function SiteHeader() {
                         .querySelector("#products")
                         ?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="w-full rounded-full"
+                    className="w-full rounded-lg"
                   >
                     Order Now
                   </Button>

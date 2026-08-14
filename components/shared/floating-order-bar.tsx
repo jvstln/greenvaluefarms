@@ -26,7 +26,7 @@ export function FloatingOrderBar() {
     <div
       inert={!visible}
       className={cn(
-        "fixed bottom-5 left-1/2 z-40 -translate-x-1/2 transition-all duration-300 sm:right-6 sm:bottom-6 sm:left-auto sm:translate-x-0",
+        "fixed bottom-5 left-1/2 z-40 -translate-x-1/2 transition-[transform,opacity] duration-300 sm:right-6 sm:bottom-6 sm:left-auto sm:translate-x-0",
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0",
@@ -36,15 +36,15 @@ export function FloatingOrderBar() {
         type="button"
         onClick={openSheet}
         aria-label={`${floatingBar.reviewLabel} — ${totalItems} ${label} in order`}
-        className="flex items-center gap-3 rounded-full bg-primary py-2.5 pr-5 pl-2.5 text-primary-foreground shadow-primary/20 shadow-xl transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0"
+        className="flex items-center gap-3 rounded-full bg-primary py-2.5 pr-5 pl-2.5 text-primary-foreground shadow-[0_4px_0_0_rgba(27,35,27,0.35)] transition-[transform,box-shadow] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0"
       >
         <span className="relative flex size-9 items-center justify-center rounded-full bg-accent text-accent-foreground">
           <ShoppingBasket className="size-4" aria-hidden="true" />
-          <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-foreground font-bold text-[11px] text-primary">
+          <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-accent-foreground font-mono font-semibold text-[11px] text-accent">
             {totalItems}
           </span>
         </span>
-        <span className="font-semibold text-sm tabular-nums">
+        <span className="font-medium font-mono text-sm tabular-nums">
           {formatPrice(totalPrice, currency)}
         </span>
       </button>

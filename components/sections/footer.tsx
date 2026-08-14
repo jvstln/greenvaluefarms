@@ -19,17 +19,11 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative scroll-mt-20 overflow-hidden bg-primary text-primary-foreground"
+      className="relative scroll-mt-20 bg-primary text-primary-foreground"
     >
-      {/* soft glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 right-[-6rem] size-96 rounded-full bg-accent/10 blur-3xl"
-      />
-
       <div className="wrap relative pt-16 pb-28 sm:pt-20">
         {/* CTA band */}
-        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-primary-foreground/10 bg-primary-foreground/[0.04] p-7 sm:p-9 lg:flex-row lg:items-center">
+        <div className="flex flex-col items-start justify-between gap-6 rounded-xl border border-primary-foreground/20 bg-primary-foreground/[0.04] p-7 sm:p-9 lg:flex-row lg:items-center">
           <div>
             <h2 className="font-display font-semibold text-2xl tracking-tight sm:text-3xl">
               {footer.ctaHeading}
@@ -41,7 +35,7 @@ export function Footer() {
           <WhatsAppButton
             label={footer.ctaButton}
             size="lg"
-            className="h-12 shrink-0 rounded-full px-7"
+            className="h-12 shrink-0 rounded-lg px-7"
           />
         </div>
 
@@ -69,7 +63,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer navigation">
-            <h3 className="font-semibold text-primary-foreground/60 text-xs uppercase tracking-[0.2em]">
+            <h3 className="font-medium font-mono text-[0.7rem] text-accent uppercase tracking-[0.2em]">
               {footer.quickLinksHeading}
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -87,7 +81,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <h3 className="font-semibold text-primary-foreground/60 text-xs uppercase tracking-[0.2em]">
+            <h3 className="font-medium font-mono text-[0.7rem] text-accent uppercase tracking-[0.2em]">
               {footer.contactHeading}
             </h3>
             <ul className="mt-4 space-y-3 text-primary-foreground/80 text-sm">

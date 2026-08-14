@@ -80,7 +80,7 @@ export function OrderSummarySheet() {
             </div>
             <Button
               variant="outline"
-              className="rounded-full"
+              className="rounded-lg"
               onClick={() => {
                 closeSheet();
                 document
@@ -153,9 +153,11 @@ export function OrderSummarySheet() {
                   </Label>
                   <Input
                     id="order-name"
+                    name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={orderSheet.customerNamePlaceholder}
+                    autoComplete="name"
                     className="bg-background"
                   />
                 </div>
@@ -165,9 +167,12 @@ export function OrderSummarySheet() {
                   </Label>
                   <Input
                     id="order-notes"
+                    name="notes"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder={orderSheet.customerDetailsPlaceholder}
+                    autoComplete="off"
+                    spellCheck={false}
                     className="bg-background"
                   />
                 </div>
@@ -176,7 +181,7 @@ export function OrderSummarySheet() {
                   <span className="font-medium text-muted-foreground text-sm">
                     {orderSheet.subtotalLabel}
                   </span>
-                  <span className="font-display font-semibold text-xl">
+                  <span className="font-display font-semibold text-xl tabular-nums">
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
@@ -188,7 +193,7 @@ export function OrderSummarySheet() {
                   aria-label={orderSheet.sendButton}
                   className={cn(
                     buttonVariants({ variant: "accent", size: "lg" }),
-                    "w-full rounded-full",
+                    "w-full rounded-lg",
                   )}
                 >
                   <WhatsAppIcon className="size-4" />

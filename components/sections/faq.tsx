@@ -19,6 +19,7 @@ export function Faq() {
           <SectionHeading
             eyebrow={faqSection.eyebrow}
             title={faqSection.heading}
+            align="center"
           />
         </Reveal>
 

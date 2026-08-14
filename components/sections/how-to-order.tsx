@@ -4,9 +4,8 @@ import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { siteConfig } from "@/lib/config/site";
 
 /**
- * "How to order" — a numbered, connected flow ending in the WhatsApp CTA.
- * Mobile: vertical connector on the left. Desktop: horizontal dashed line
- * behind the numbered badges.
+ * "How to order" — a ledger of four steps, each opened by a solid top rule,
+ * ending in the WhatsApp CTA on a hard-outlined panel.
  */
 export function HowToOrder() {
   const { orderingSection, orderingSteps } = siteConfig;
@@ -25,52 +24,35 @@ export function HowToOrder() {
           />
         </Reveal>
 
-        <div className="relative mt-14">
-          {/* connector lines (behind the badges) */}
-          <div
-            aria-hidden
-            className="absolute inset-y-0 left-7 hidden border-primary/20 border-l-2 border-dashed lg:hidden"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-x-16 top-7 hidden border-primary/20 border-t-2 border-dashed lg:block"
-          />
-
-          <ol className="grid gap-x-6 gap-y-10 lg:grid-cols-4">
+        <Reveal delay={0.05}>
+          <ol className="mt-12 grid gap-x-8 gap-y-10 lg:grid-cols-4">
             {orderingSteps.map((step, index) => (
-              <li key={step.step}>
-                <Reveal delay={index * 0.08}>
-                  <div className="relative flex gap-5 lg:flex-col lg:items-center lg:gap-4 lg:text-center">
-                    {/* numbered badge */}
-                    <span className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-accent font-display font-semibold text-accent-foreground text-xl shadow-md ring-4 ring-background">
-                      {step.step}
-                    </span>
-                    <div className="lg:max-w-[14rem]">
-                      <h3 className="font-display font-semibold text-lg tracking-tight">
-                        {step.title}
-                      </h3>
-                      <p className="mt-1.5 text-muted-foreground text-sm leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
+              <li key={step.step} className="border-primary border-t-2 pt-4">
+                <span className="font-medium font-mono text-[0.7rem] text-rust uppercase tracking-[0.2em]">
+                  Step 0{index + 1}
+                </span>
+                <h3 className="mt-2 font-bold font-display text-xl tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="mt-1.5 text-muted-foreground text-sm leading-relaxed">
+                  {step.description}
+                </p>
               </li>
             ))}
           </ol>
-        </div>
+        </Reveal>
 
         {/* CTA */}
-        <Reveal className="mt-16 text-center">
-          <div className="mx-auto flex max-w-xl flex-col items-center gap-4 rounded-3xl border border-border bg-muted/50 p-8 sm:p-10">
+        <Reveal className="mt-16">
+          <div className="flex flex-col items-start gap-5 rounded-xl border border-foreground/25 bg-card p-7 shadow-[6px_6px_0_0_rgba(31,70,48,0.12)] sm:p-9 lg:flex-row lg:items-center lg:justify-between">
+            <p className="max-w-md text-muted-foreground text-sm leading-relaxed">
+              {orderingSection.ctaHint}
+            </p>
             <WhatsAppButton
               label={orderingSection.ctaLabel}
               size="lg"
-              className="h-13 w-full rounded-full sm:w-auto sm:px-8"
+              className="h-12 shrink-0 px-8"
             />
-            <p className="max-w-md text-muted-foreground text-sm">
-              {orderingSection.ctaHint}
-            </p>
           </div>
         </Reveal>
       </div>

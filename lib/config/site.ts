@@ -102,27 +102,23 @@ export const siteConfig = {
     },
   ],
 
-  /* Why-us cards — icons are lucide-react icon names (see WhyUs section). */
+  /* Why-us rows — rendered as a numbered ledger in the WhyUs section. */
   whyUs: [
     {
-      icon: "leaf",
       title: "Farm Fresh",
       description: "Raised on our own farm, not sourced from a middleman.",
     },
     {
-      icon: "shield-check",
       title: "No Hormones or Shortcuts",
       description:
         "Clean feed program, room to grow, and consistent care — no hormones, no overcrowding, no shortcuts.",
     },
     {
-      icon: "hand-heart",
       title: "Handled with Care",
       description:
         "Every bird is dressed, inspected and packed with care before it leaves the farm.",
     },
     {
-      icon: "truck",
       title: "Fast Local Delivery",
       description:
         "Same-day or next-day delivery across Lagos. Confirm your area and timing on WhatsApp.",
@@ -184,7 +180,7 @@ export const siteConfig = {
     {
       question: "How does the WhatsApp ordering work?",
       answer:
-        "Add your products, review the summary, and press 'Send Order via WhatsApp'. Your order arrives as a message we reply to directly — we confirm price, delivery and pickup before anything is final.",
+        "Add your products, review the summary, and press \u2018Send Order via WhatsApp\u2019. Your order arrives as a message we reply to directly — we confirm price, delivery and pickup before anything is final.",
     },
     {
       question: "Can I visit the farm?",
