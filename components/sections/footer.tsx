@@ -144,6 +144,14 @@ export function Footer() {
             © {new Date().getFullYear()} {business.name}.{" "}
             {footer.copyrightSuffix}
           </p>
+          <nav className="flex items-center gap-4" aria-label="Legal pages">
+            <a href="/privacy" className="transition-colors hover:text-accent">
+              Privacy
+            </a>
+            <a href="/terms" className="transition-colors hover:text-accent">
+              Terms
+            </a>
+          </nav>
           <p className="flex items-center gap-1.5">
             <AtSign className="size-3.5" aria-hidden />
             {business.tagline}
