@@ -20,7 +20,7 @@ No env vars, no test suite, no CI.
 
 ## Getting started
 
-The repo is **pnpm-only** (pinned `pnpm@10.30.3`). Don't use npm/yarn.
+The repo is **pnpm-only** (pinned `pnpm@11.21.0`, matching Hostinger's corepack). Don't use npm/yarn.
 
 ```bash
 pnpm install
