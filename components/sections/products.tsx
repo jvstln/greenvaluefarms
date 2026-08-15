@@ -24,9 +24,17 @@ export function Products() {
               title={productsSection.heading}
               description={productsSection.sub}
             />
-            <p className="font-mono text-[0.7rem] text-muted-foreground uppercase tracking-[0.2em]">
-              {products.length} cuts · farm-raised
-            </p>
+            <div className="flex flex-col items-end gap-2">
+              <p className="font-mono text-[0.7rem] text-muted-foreground uppercase tracking-[0.2em]">
+                {products.length} cuts · farm-raised
+              </p>
+              <a
+                href="/products"
+                className="font-mono text-[0.7rem] text-rust uppercase tracking-[0.2em] underline decoration-dashed underline-offset-4 transition-colors hover:text-primary"
+              >
+                View full menu →
+              </a>
+            </div>
           </div>
         </Reveal>
 
