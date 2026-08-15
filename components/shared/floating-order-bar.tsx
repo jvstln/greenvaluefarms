@@ -1,6 +1,7 @@
 "use client";
 
 import { ShoppingBasket } from "lucide-react";
+import { products } from "@/lib/config/products";
 import { siteConfig } from "@/lib/config/site";
 import { formatPrice } from "@/lib/format";
 import { useOrder } from "@/lib/order-store";
@@ -17,7 +18,7 @@ export function FloatingOrderBar() {
 
   const visible = totalItems > 0 && !isOpen;
 
-  const { floatingBar, products } = siteConfig;
+  const { floatingBar } = siteConfig;
   const label =
     totalItems === 1 ? floatingBar.itemLabel : floatingBar.itemsLabel;
   const currency = products[0]?.currency ?? "NGN";

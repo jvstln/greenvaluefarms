@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { QuantityStepper } from "@/components/shared/quantity-stepper";
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/lib/config/site";
+import type { Product } from "@/lib/config/products";
 import { formatPrice } from "@/lib/format";
 import { useOrder } from "@/lib/order-store";
 

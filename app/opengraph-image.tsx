@@ -1,4 +1,5 @@
 import { contentType, makeOgImage, size } from "@/components/seo/og-image";
+import { products } from "@/lib/config/products";
 import { siteConfig } from "@/lib/config/site";
 import { formatPrice } from "@/lib/format";
 
@@ -7,7 +8,7 @@ export { contentType, size };
 export const alt = `${siteConfig.business.name} — ${siteConfig.business.tagline}`;
 
 export default async function OgImage() {
-  const { business, products } = siteConfig;
+  const { business } = siteConfig;
   const heroProduct = products[0];
 
   /* Avoid the ₦ glyph — not in the bundled OG fonts, ImageResponse can't

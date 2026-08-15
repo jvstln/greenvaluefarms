@@ -1,4 +1,5 @@
 import { writeFileSync } from "node:fs";
+import { products } from "../lib/config/products";
 import { siteConfig } from "../lib/config/site";
 
 /**
@@ -26,7 +27,7 @@ const header = [
 const csvEscape = (value: string): string =>
   /[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
 
-const rows = siteConfig.products.map((product) => {
+const rows = products.map((product) => {
   const tags = product.tags as readonly string[];
   return [
     product.id,

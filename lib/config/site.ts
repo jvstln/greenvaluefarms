@@ -1,16 +1,18 @@
 /**
  * GreenValueFarms — single source of truth
  * ---------------------------------------------------------------------------
- * EVERYTHING business-related lives in this file. If the owner or a future
- * developer needs to change copy, prices, contact details, products, or nav
- * links, they should edit THIS file and nothing else.
+ * EVERYTHING business-related lives in this file — copy, contact details,
+ * nav, sections, FAQ and misc labels. Products have their own file
+ * (`lib/config/products.ts`). If the owner or a future developer needs to
+ * change copy, prices, products, or nav links, they should edit the right
+ * config file and nothing else.
  *
  * Values that still need real data from the owner (phone, email, address,
  * socials, logo, imagery) are marked with a `// TODO: owner` comment. All
  * marketing copy is written to read as a professional, established business.
  *
  * The object is declared `as const` so TypeScript infers precise literal
- * types (see the derived `Product`, `NavItem`, etc. types at the bottom).
+ * types (see the derived `NavItem`, `FaqItem`, etc. types at the bottom).
  * Do not hardcode any business data inside component files.
  */
 export const siteConfig = {
@@ -58,70 +60,15 @@ export const siteConfig = {
     },
   },
 
-  /* In-page navigation. `href` is either a page route (e.g. "/about-us") or a
+  /* In-page navigation. `href` is either a page route (e.g. "/products") or a
      section id ("#products"). Section anchors must match a section id on the
      page they're rendered on. */
   nav: [
-    { label: "Products", href: "#products" },
+    { label: "Products", href: "/products" },
     { label: "Why Us", href: "#why-us" },
     { label: "How to Order", href: "#ordering" },
     { label: "Our Story", href: "/about-us" },
     { label: "Contact", href: "#contact" },
-  ],
-
-  /* -------------------------------------------------------------------------
-     Products — price is stored in the smallest currency unit as a plain
-     number; `currency` is the ISO code. The order summary / WhatsApp
-     message derives all totals from these numbers, so keep them accurate.
-     `image` is a real Unsplash photo (the host is whitelisted in
-     next.config.ts) — edit the URL here if the owner wants a different shot.
-  ------------------------------------------------------------------------- */
-  products: [
-    {
-      id: "whole-chicken-medium",
-      name: "Whole Chicken (Medium)",
-      description: "Approx. 1.2–1.5kg, farm-raised, dressed and ready to cook.",
-      price: 11500,
-      currency: "NGN",
-      unit: "per bird",
-      image:
-        "https://images.unsplash.com/photo-1672787153720-e85fe802fd9f?w=800&q=70&auto=format&fit=crop",
-      tags: ["Best Seller"],
-    },
-    {
-      id: "whole-chicken-large",
-      name: "Whole Chicken (Large)",
-      description: "Approx. 1.8–2.2kg, farm-raised, dressed and ready to cook.",
-      price: 12000,
-      currency: "NGN",
-      unit: "per bird",
-      image:
-        "https://images.unsplash.com/photo-1672787153655-0c19308dcc60?w=800&q=70&auto=format&fit=crop",
-      tags: ["Large"],
-    },
-    {
-      id: "chicken-parts",
-      name: "Chicken Parts",
-      description:
-        "Mixed cuts — drumsticks, thighs, wings and breast. Packed frozen.",
-      price: 7500,
-      currency: "NGN",
-      unit: "per kg",
-      image:
-        "https://images.unsplash.com/photo-1759493321741-883fbf9f433c?w=800&q=70&auto=format&fit=crop",
-      tags: [],
-    },
-    {
-      id: "live-birds",
-      name: "Live Birds",
-      description: "Healthy, fully-grown birds for breeding or home slaughter.",
-      price: 10000,
-      currency: "NGN",
-      unit: "per bird",
-      image:
-        "https://images.unsplash.com/photo-1556316918-880f9e893822?w=800&q=70&auto=format&fit=crop",
-      tags: ["By Request"],
-    },
   ],
 
   /* Why-us rows — rendered as a numbered ledger in the WhyUs section. */
@@ -229,6 +176,16 @@ export const siteConfig = {
     sub: "Every bird is raised on the farm, dressed to order, and priced honestly.",
   },
 
+  /* Full menu page — a roomier catalog than the home grid, with its own
+     note and a "browse on WhatsApp" strip (see `business.catalog`). */
+  productsPage: {
+    eyebrow: "Full Menu",
+    heading: "Every cut, priced honestly.",
+    sub: "The complete range from the farm — whole birds, cuts and live birds. Prices are estimates in naira; we confirm final price and delivery on WhatsApp.",
+    countSuffix: "on the farm",
+    note: "Delivery across Nigeria, same-day or next-day depending on your area. Add to your order and send it to us on WhatsApp.",
+  },
+
   whyUsSection: {
     eyebrow: "Why GreenValueFarms",
     heading: "Raising standards, no compromises.",
@@ -297,10 +254,10 @@ export const siteConfig = {
 
 /* ---------------------------------------------------------------------------
    Derived types — components consume these, so editing the config above is
-   type-checked everywhere it's used.
+   type-checked everywhere it's used. The `Product` type lives in
+   `lib/config/products.ts`.
 --------------------------------------------------------------------------- */
 export type SiteConfig = typeof siteConfig;
-export type Product = (typeof siteConfig.products)[number];
 export type NavItem = (typeof siteConfig.nav)[number];
 export type WhyUsItem = (typeof siteConfig.whyUs)[number];
 export type OrderingStep = (typeof siteConfig.orderingSteps)[number];

@@ -1,3 +1,4 @@
+import { products } from "@/lib/config/products";
 import { siteConfig } from "@/lib/config/site";
 
 /**
@@ -17,7 +18,7 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
 
 /** LocalBusiness (Farm) schema — mounted once in the root layout. */
 export function JsonLdLocalBusiness() {
-  const { business, products } = siteConfig;
+  const { business } = siteConfig;
   const { contact, socials, url, name, description, logo } = business;
 
   const [streetAddress, addressRegion, addressCountry] =
@@ -52,7 +53,7 @@ export function JsonLdLocalBusiness() {
 
 /** Product list schema — mounted in the Products section on the home page. */
 export function JsonLdProducts() {
-  const { business, products } = siteConfig;
+  const { business } = siteConfig;
 
   return (
     <JsonLd

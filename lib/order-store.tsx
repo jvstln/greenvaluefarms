@@ -12,7 +12,7 @@ import { type ReactNode, useEffect, useMemo } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
-import { type Product, siteConfig } from "@/lib/config/site";
+import { type Product, products } from "@/lib/config/products";
 import type { OrderLine } from "@/lib/types";
 
 const STORAGE_KEY = "greenvaluefarms:order:v1";
@@ -127,9 +127,7 @@ export function useOrder(): OrderStore {
   );
 
   const lines = useMemo<OrderLine[]>(() => {
-    const byId = new Map<string, Product>(
-      siteConfig.products.map((p) => [p.id, p]),
-    );
+    const byId = new Map<string, Product>(products.map((p) => [p.id, p]));
     return Object.entries(quantities)
       .map(([productId, qty]): OrderLine | null => {
         const product = byId.get(productId);
@@ -179,8 +177,5 @@ export function useOrder(): OrderStore {
 
 /** Convenience lookup for a product by id (falls back to the first product). */
 export function getProduct(productId: string): Product {
-  return (
-    siteConfig.products.find((p) => p.id === productId) ??
-    siteConfig.products[0]
-  );
+  return products.find((p) => p.id === productId) ?? products[0];
 }

@@ -4,7 +4,7 @@
  * `lib/config/site.ts` so there's a single source of truth.
  */
 
-import type { Product } from "@/lib/config/site";
+import type { Product } from "@/lib/config/products";
 
 /** A single line in the customer's order: a product + how many. */
 export interface OrderLine {

@@ -3,14 +3,15 @@ import { CatalogCta } from "@/components/shared/catalog-cta";
 import { ProductCard } from "@/components/shared/product-card";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { products } from "@/lib/config/products";
 import { siteConfig } from "@/lib/config/site";
 
 /**
  * Product grid — one ticket per item in the config, reflowing from 1 column
- * (mobile) to 2 (tablet) to 4 (desktop).
+ * (mobile) to 2 (tablet) to 4 (desktop). The full menu lives at /products.
  */
 export function Products() {
-  const { productsSection, products } = siteConfig;
+  const { productsSection } = siteConfig;
 
   return (
     <section id="products" className="scroll-mt-20 bg-muted/50 py-16 sm:py-24">
