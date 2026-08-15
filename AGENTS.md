@@ -34,6 +34,7 @@ Single-page Next.js site for a nigerian chicken farm: a marketing landing page p
 
 ## Conventions / quirks
 - pnpm settings live in `pnpm-workspace.yaml`, not `package.json` — pnpm 11 dropped the `pnpm` field; dependency build scripts are approved via `allowBuilds` (esbuild, unrs-resolver). The `packageManager` pin is `pnpm@11.21.0` because Hostinger's corepack refuses to switch versions.
+- Hostinger shared hosting has an old glibc (native SWC won't load) and no `pnpm` on PATH during build — so `build` runs `next build --webpack`, and the `postinstall` (`scripts/seed-next-wasm.mjs`) seeds `@next/swc-wasm-nodejs` into `next/wasm/` so Next's WASM fallback needs neither a download nor `pnpm config get registry`. Locally the native binary wins, so `NEXT_TEST_WASM=true` is how you simulate the Hostinger path.
 - `"use client"` only where needed (zustand, GSAP, sheets); everything else stays a server component.
 - `useOrder()` (`lib/order-store.tsx`) reads a **global zustand store, not a context provider**. `OrderProvider` only rehydrates localStorage after mount; components call `useOrder()` directly (selector uses `useShallow`). Persisted key is `greenvaluefarms:order:v1` — bump it if the persisted shape ever changes.
 - UI primitives are **Base UI** (`@base-ui/react`, installed via shadcn 4.17), not Radix. `components/ui/*` wrap Base UI; primitives compose via the `render={<Button …/>}` prop (see the mobile menu in `site-header.tsx`). Add new ones with `pnpm dlx shadcn@latest add …`.

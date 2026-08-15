@@ -143,6 +143,16 @@ The design rules are deliberately strict — the codebase does **not** use blurr
 
 A fully static Next.js build — any host that supports Next.js works (Vercel, Netlify, a VPS with `next start`). No env vars or build-time secrets are required.
 
+### Hostinger shared hosting (file upload)
+
+Hostinger's shared-hosting builder runs an old glibc, so Next's native SWC binary can't load — three things make the build work there (all verified with the WASM+webpack path locally):
+
+- **`next build --webpack`** — Turbopack requires the native bindings; webpack works with the WASM fallback.
+- **`@next/swc-wasm-nodejs`** is a dependency and `scripts/seed-next-wasm.mjs` (a `postinstall`) copies it to `next/wasm/@next/swc-wasm-nodejs`. That makes Next's on-demand WASM download short-circuit — otherwise it runs `pnpm config get registry`, which fails because `pnpm` isn't on PATH during the build.
+- **`packageManager` is `pnpm@11.21.0`**, matching Hostinger's corepack (it refuses to switch versions), with build-script approvals in `pnpm-workspace.yaml` (`allowBuilds`) — pnpm 11 dropped the `pnpm` field in `package.json`.
+
+`next start` never loads SWC, so the runtime needs no special handling.
+
 ## Development notes
 
 - `"use client"` only where needed (zustand, GSAP, sheets); everything else stays a server component.
