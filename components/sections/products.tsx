@@ -1,4 +1,5 @@
 import { JsonLdProducts } from "@/components/seo/json-ld";
+import { CatalogCta } from "@/components/shared/catalog-cta";
 import { ProductCard } from "@/components/shared/product-card";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -34,6 +35,10 @@ export function Products() {
               <ProductCard key={product.id} product={product} index={index} />
             ))}
           </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <CatalogCta />
         </Reveal>
       </div>
     </section>

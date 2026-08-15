@@ -1,4 +1,13 @@
-import { AtSign, Camera, Globe, Mail, MapPin, Phone } from "lucide-react";
+import {
+  AtSign,
+  Camera,
+  Globe,
+  Mail,
+  MapPin,
+  Phone,
+  ShoppingBag,
+} from "lucide-react";
+import { CatalogLink } from "@/components/shared/catalog-cta";
 import { SectionLink } from "@/components/shared/section-link";
 import { SiteLogo } from "@/components/shared/site-logo";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
@@ -117,6 +126,13 @@ export function Footer() {
                 >
                   {contact.email}
                 </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <ShoppingBag
+                  className="size-4 shrink-0 text-accent"
+                  aria-hidden
+                />
+                <CatalogLink className="transition-colors hover:text-accent" />
               </li>
             </ul>
           </div>

@@ -13,6 +13,7 @@ An order is a pre-filled `wa.me` deep link — a customer builds an order in a s
 - **GSAP + ScrollTrigger** — scroll-reveal and the hero's self-drawing print rule
 - **Base UI** (`@base-ui/react`) — UI primitives, installed via shadcn 4.17 (not Radix)
 - **lucide-react** — icons
+- **qrcode** — the WhatsApp Catalog QR in the products strip (server-rendered SVG)
 - **next/font** — Archivo (display), Hanken Grotesk (body), IBM Plex Mono (numerals)
 
 No env vars, no test suite, no CI.
@@ -41,6 +42,7 @@ Open [http://localhost:3000](http://localhost:3000). The landing page is `/`, an
 | `pnpm format`            | `biome format --write` only                                          |
 | `pnpm check`             | `biome check --write` — autofixes incl. Tailwind class sorting (`useSortedClasses`) and import organization |
 | `pnpm exec tsc --noEmit` | Typecheck                                                            |
+| `pnpm catalog:csv`       | Emit `catalog.csv` from `lib/config/site.ts` for the WhatsApp Catalog |
 
 ## Project structure
 
@@ -59,13 +61,17 @@ lib/
   config/site.ts        Single source of truth for all business data (home + ordering)
   config/about-us.ts    Single source of truth for company data (About page + story teaser)
   order-store.tsx       zustand cart (persisted), useOrder() hook, OrderProvider
-  whatsapp.ts           Pure helpers: WhatsApp message + wa.me URL
+  whatsapp.ts           Pure helpers: WhatsApp message, wa.me URL, catalog URL
   format.ts             formatPrice, digitsOnly
   types.ts              Order-flow types
   utils.ts              cn(), isTodo()
 public/
   logo-icon.svg         Logo (light/dark variants)
   team/*.jpg            Team portraits (placeholder JPEGs until real photos land)
+scripts/
+  generate-catalog-csv.ts  Emits catalog.csv for the WhatsApp Catalog (pnpm catalog:csv)
+docs/
+  whatsapp-catalog.md   WhatsApp Catalog in-app setup guide
 ```
 
 ## How ordering works
@@ -83,6 +89,21 @@ Gotchas:
 - The WhatsApp number in config is digits-only (no `+` / spaces); `buildWhatsAppUrl` strips non-digits as a safety net.
 - The persisted cart key is `greenvaluefarms:order:v1` — bump it if the persisted shape ever changes.
 - A future real checkout can consume `lines` / `totalPrice` from the store without touching the UI.
+
+### WhatsApp Catalog (the in-chat menu)
+
+Alongside the site flow, `business.catalog` in `lib/config/site.ts` drives a
+"Browse our menu on WhatsApp" strip (button + QR + a dashed plain-chat
+fallback) under the products grid and in the footer. It's the WhatsApp-side
+menu — see `docs/whatsapp-catalog.md` for the in-app setup.
+
+- `catalog.enabled: true` points everything at `wa.me/c/<number>` (requires a
+  WhatsApp Business number with an active catalog).
+- Set it to `false` if the number isn't a Business number: every catalog CTA
+  self-heals to a plain `wa.me` chat link asking for the menu. WhatsApp can't
+  report catalog availability programmatically, so this is the owner's switch.
+- `pnpm catalog:csv` emits `catalog.csv` (one row per product) for a bulk
+  import, keeping the site and catalog in sync.
 
 ## Where data lives
 

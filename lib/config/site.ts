@@ -42,6 +42,20 @@ export const siteConfig = {
     },
     aboutLine:
       "Farm-raised in Nigeria — dressed, packed and delivered with care.",
+    /* WhatsApp Catalog — an always-on, shareable menu that lives inside the
+       WhatsApp Business app (separate from this website's ordering flow).
+       `enabled: true` points every "browse on WhatsApp" CTA + QR at the
+       `wa.me/c/…` catalog link. WhatsApp can't tell us programmatically
+       whether a number has an active catalog, so `enabled` is the one switch
+       the owner flips after testing the link once: if it errors, the number
+       isn't a WhatsApp Business number with a catalog — set `enabled: false`
+       and every catalog CTA self-heals into a plain chat link. */
+    catalog: {
+      enabled: false, // set to false if the number has no WhatsApp Business catalog.
+      // Sent as a plain chat message whenever the catalog is unavailable.
+      fallbackMessage:
+        "Hello GreenValueFarms! Please send us your current menu and prices.",
+    },
   },
 
   /* In-page navigation. `href` is either a page route (e.g. "/about-us") or a
@@ -255,6 +269,19 @@ export const siteConfig = {
     reviewLabel: "Review order",
     itemLabel: "item", // singular
     itemsLabel: "items", // plural
+  },
+
+  /* WhatsApp Catalog strip — the "browse the menu on WhatsApp" block under the
+     product grid. The button + QR target the catalog when
+     `business.catalog.enabled` is true; otherwise they fall back to a plain
+     chat message (the dashed "No catalog?" link always chats). */
+  catalogSection: {
+    eyebrow: "Menu on WhatsApp",
+    heading: "Prefer to browse the menu in WhatsApp?",
+    copy: "Tap through our full catalog inside WhatsApp — photos, prices and quantities, ready to send as an order.",
+    buttonLabel: "Browse our menu on WhatsApp",
+    fallbackLabel: "No catalog? Just message us",
+    scanHint: "Scan to browse our menu",
   },
 
   footer: {

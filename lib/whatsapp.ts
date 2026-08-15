@@ -82,3 +82,12 @@ export function buildWhatsAppOrderMessage(input: WhatsAppOrderInput): string {
 export function buildWhatsAppUrl(phoneNumber: string, message: string): string {
   return `https://wa.me/${digitsOnly(phoneNumber)}?text=${encodeURIComponent(message)}`;
 }
+
+/**
+ * Build a wa.me *catalog* deep-link — opens the business's WhatsApp Catalog
+ * (requires a WhatsApp Business number with an active catalog). Same
+ * digits-only safety as `buildWhatsAppUrl`.
+ */
+export function buildCatalogUrl(phoneNumber: string): string {
+  return `https://wa.me/c/${digitsOnly(phoneNumber)}`;
+}
