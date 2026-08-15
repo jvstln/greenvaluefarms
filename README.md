@@ -50,6 +50,9 @@ Open [http://localhost:3000](http://localhost:3000). The landing page is `/`, an
 app/
   page.tsx              Landing page — composes home sections
   about-us/page.tsx     About / Our Story page — composes the about sections
+  products/page.tsx     Full menu page — every product plus the catalog CTA
+  privacy/page.tsx      Privacy Policy (from lib/config/legal.ts)
+  terms/page.tsx        Terms of Service (from lib/config/legal.ts)
   layout.tsx            Root layout: fonts, header/footer shell, order provider
   globals.css           Design tokens, base styles, @utility wrap
 components/
@@ -58,8 +61,10 @@ components/
   shared/               Cross-page pieces (reveal, section-heading, print-rule, team-photo, …)
   ui/                   Base UI primitives (button, sheet, input, …)
 lib/
-  config/site.ts        Single source of truth for all business data (home + ordering)
+  config/site.ts        Single source of truth for all business copy (contact, nav, sections, FAQ)
+  config/products.ts    Every product + the derived Product type
   config/about-us.ts    Single source of truth for company data (About page + story teaser)
+  config/legal.ts       Privacy Policy + Terms content (NDPA 2023-aware)
   order-store.tsx       zustand cart (persisted), useOrder() hook, OrderProvider
   whatsapp.ts           Pure helpers: WhatsApp message, wa.me URL, catalog URL
   format.ts             formatPrice, digitsOnly
@@ -107,9 +112,13 @@ menu — see `docs/whatsapp-catalog.md` for the in-app setup.
 
 ## Where data lives
 
-**All business copy, prices, products, contact, nav, and FAQ** → `lib/config/site.ts`. Declared `as const`; `Product`, `NavItem`, etc. are derived types. **Never hardcode business data in a component.**
+**All business copy, contact, nav, sections and FAQ** → `lib/config/site.ts`. Declared `as const`; `NavItem`, `FaqItem`, etc. are derived types. **Never hardcode business data in a component.**
+
+**All products** (name, price, description, image, tags) → `lib/config/products.ts`. The `Product` type is derived here; the home grid, `/products`, the order cart, the catalog CSV and JSON-LD all read from it.
 
 **Everything about the company** (narrative, values, milestones, team, and the home page's "Our Story" teaser) → `lib/config/about-us.ts`.
+
+**Privacy Policy + Terms** (production-ready, NDPA 2023-aware) → `lib/config/legal.ts`, rendered by `components/shared/legal-content.tsx` on `/privacy` and `/terms`.
 
 Values still waiting on the owner are marked `// TODO: owner` (e.g. real contact email, milestone years, team social URLs). Team photos live in `public/team/*.jpg`; `components/shared/team-photo.tsx` shows a monogram ticket until a file exists, so a missing photo can't break the page.
 

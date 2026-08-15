@@ -22,9 +22,11 @@ Single-page Next.js site for a nigerian chicken farm: a marketing landing page p
 - No test suite, no CI, no env vars.
 
 ## Where things live
-- `app/page.tsx` — the landing page; composes sections from `components/sections/`. `app/about-us/page.tsx` is the second (and only other) page, composed from `components/sections/about/`.
-- `lib/config/site.ts` — **single source of truth for ALL business data** (copy, prices, products, contact, nav, FAQ). Declared `as const`; `Product`, `NavItem`, … types are derived from it. Never hardcode business data in a component — edit this file. `// TODO: owner` marks real data still pending.
+- `app/page.tsx` — the landing page; composes sections from `components/sections/`. Other pages: `/about-us` (from `components/sections/about/`), `/products` (full menu), `/privacy` and `/terms` (legal, from `lib/config/legal.ts` via `components/shared/legal-content.tsx`).
+- `lib/config/site.ts` — **single source of truth for ALL business copy** (contact, nav, sections, FAQ, labels). Declared `as const`; `NavItem`, `FaqItem`, … types are derived from it. Never hardcode business data in a component — edit this file. `// TODO: owner` marks real data still pending.
+- `lib/config/products.ts` — **every product** (name, price, description, image, tags); `Product` type is derived here. The home grid, `/products` page, order cart, catalog CSV and JSON-LD all read from it.
 - `lib/config/about-us.ts` — same idea, for everything about the company: the narrative, values, milestones, and `team`. The home page's "Our Story" teaser (`story`/`storySection`) also lives here since the About page landed. Team photos are `/public/team/*.jpg` — `components/shared/team-photo.tsx` falls back to a monogram ticket until a file exists.
+- `lib/config/legal.ts` — production-ready Privacy Policy + Terms (NDPA 2023-aware), rendered on `/privacy` and `/terms`.
 - `lib/order-store.tsx` — zustand cart, persisted to localStorage. `skipHydration` + manual rehydrate in `OrderProvider` avoids SSR mismatches; SSR always renders an empty order.
 - `lib/whatsapp.ts` / `lib/format.ts` — pure, framework-free helpers that build the WhatsApp message and `wa.me` URL; keep UI out so they stay unit-testable.
 - `lib/types.ts` (order-flow types) and `lib/utils.ts` (`cn`, `isTodo`) hold the rest; config-derived types live in their config files.
