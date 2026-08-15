@@ -19,6 +19,8 @@ export const siteConfig = {
     tagline: "Farm-fresh chickens, raised right.",
     description:
       "Healthy, well-raised birds delivered fresh from our farm — no middlemen, no shortcuts.",
+    // Canonical base URL — used for sitemap, robots, Open Graph and JSON-LD.
+    url: "https://greenvaluefarms.com", // TODO: owner — replace with the real domain.
     // Used at the top of every WhatsApp order.
     orderIntro: "Hello GreenValueFarms! I would like to place an order:",
     logo: {

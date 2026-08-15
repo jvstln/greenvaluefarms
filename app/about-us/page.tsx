@@ -13,6 +13,20 @@ import { siteConfig } from "@/lib/config/site";
 export const metadata: Metadata = {
   title: `${aboutUs.sectionLabel} — ${siteConfig.business.name}`,
   description: aboutUs.summary,
+  alternates: { canonical: "/about-us" },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.business.name,
+    title: `${aboutUs.sectionLabel} — ${siteConfig.business.name}`,
+    description: aboutUs.summary,
+    url: "/about-us",
+    locale: "en_NG",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${aboutUs.sectionLabel} — ${siteConfig.business.name}`,
+    description: aboutUs.summary,
+  },
 };
 
 export default function AboutUsPage() {

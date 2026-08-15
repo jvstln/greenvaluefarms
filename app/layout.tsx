@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { JsonLdLocalBusiness } from "@/components/seo/json-ld";
 import { FloatingOrderBar } from "@/components/shared/floating-order-bar";
 import { OrderSummarySheet } from "@/components/shared/order-summary-sheet";
 import { siteConfig } from "@/lib/config/site";
@@ -29,9 +30,30 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const { name, tagline, description, url } = siteConfig.business;
+
 export const metadata: Metadata = {
-  title: `${siteConfig.business.name} — ${siteConfig.business.tagline}`,
-  description: siteConfig.business.description,
+  metadataBase: new URL(url),
+  title: `${name} — ${tagline}`,
+  description,
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName: name,
+    title: `${name} — ${tagline}`,
+    description,
+    url: "/",
+    locale: "en_NG",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${name} — ${tagline}`,
+    description,
+  },
+};
+
+export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f6f1e7" },
     { media: "(prefers-color-scheme: dark)", color: "#141a12" },
@@ -59,6 +81,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <FloatingOrderBar />
           </LightboxProvider>
         </OrderProvider>
+        <JsonLdLocalBusiness />
       </body>
     </html>
   );

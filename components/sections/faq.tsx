@@ -1,3 +1,4 @@
+import { JsonLdFaq } from "@/components/seo/json-ld";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
 import {
@@ -14,6 +15,7 @@ export function Faq() {
 
   return (
     <section id="faq" className="scroll-mt-20 bg-background py-16 sm:py-24">
+      <JsonLdFaq />
       <div className="wrap max-w-3xl">
         <Reveal>
           <SectionHeading

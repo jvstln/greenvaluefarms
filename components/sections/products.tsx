@@ -1,3 +1,4 @@
+import { JsonLdProducts } from "@/components/seo/json-ld";
 import { ProductCard } from "@/components/shared/product-card";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -12,6 +13,7 @@ export function Products() {
 
   return (
     <section id="products" className="scroll-mt-20 bg-muted/50 py-16 sm:py-24">
+      <JsonLdProducts />
       <div className="wrap">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">

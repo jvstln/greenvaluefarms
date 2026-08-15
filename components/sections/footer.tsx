@@ -1,4 +1,5 @@
 import { AtSign, Camera, Globe, Mail, MapPin, Phone } from "lucide-react";
+import { SectionLink } from "@/components/shared/section-link";
 import { SiteLogo } from "@/components/shared/site-logo";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { siteConfig } from "@/lib/config/site";
@@ -69,12 +70,12 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <SectionLink
                     href={item.href}
                     className="text-primary-foreground/80 text-sm transition-colors hover:text-accent"
                   >
                     {item.label}
-                  </a>
+                  </SectionLink>
                 </li>
               ))}
             </ul>

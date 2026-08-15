@@ -1,7 +1,9 @@
 "use client";
 
 import { Menu, ShoppingBasket } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { SectionLink } from "@/components/shared/section-link";
 import { SiteLogo } from "@/components/shared/site-logo";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -22,25 +24,36 @@ import { cn } from "@/lib/utils";
 export function SiteHeader() {
   const { totalItems, openSheet } = useOrder();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = siteConfig.nav.map((item) => (
-    <a
+    <SectionLink
       key={item.href}
       href={item.href}
       onClick={() => setMenuOpen(false)}
       className="font-medium text-foreground/80 text-sm decoration-2 decoration-rust underline-offset-4 transition-colors hover:text-primary hover:underline"
     >
       {item.label}
-    </a>
+    </SectionLink>
   ));
+
+  const scrollToProducts = () => {
+    if (pathname === "/") {
+      document
+        .querySelector("#products")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.assign("/#products");
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 border-border border-b bg-background/80 backdrop-blur-md">
       <div className="wrap flex h-16 items-center justify-between gap-4">
         {/* Logo — links back to the top of the page */}
-        <a href="#hero" aria-label="Back to top" className="shrink-0">
+        <SectionLink href="#hero" aria-label="Back to top" className="shrink-0">
           <SiteLogo />
-        </a>
+        </SectionLink>
 
         {/* Desktop nav */}
         <nav
@@ -68,7 +81,7 @@ export function SiteHeader() {
             )}
           </Button>
 
-          <a
+          <SectionLink
             href="#products"
             className={cn(
               buttonVariants({ size: "lg" }),
@@ -76,7 +89,7 @@ export function SiteHeader() {
             )}
           >
             Order Now
-          </a>
+          </SectionLink>
 
           {/* Mobile menu trigger */}
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
@@ -102,14 +115,14 @@ export function SiteHeader() {
                   aria-label="Mobile navigation"
                 >
                   {siteConfig.nav.map((item) => (
-                    <a
+                    <SectionLink
                       key={item.href}
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
                       className="rounded-xl px-3 py-3 font-medium text-base text-foreground/85 transition-colors hover:bg-muted hover:text-primary"
                     >
                       {item.label}
-                    </a>
+                    </SectionLink>
                   ))}
                 </nav>
 
@@ -135,9 +148,7 @@ export function SiteHeader() {
                   <Button
                     onClick={() => {
                       setMenuOpen(false);
-                      document
-                        .querySelector("#products")
-                        ?.scrollIntoView({ behavior: "smooth" });
+                      scrollToProducts();
                     }}
                     className="w-full rounded-lg"
                   >
