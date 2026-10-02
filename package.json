@@ -17,6 +17,7 @@
     "@base-ui/react": "^1.7.0",
     "@gsap/react": "^2.1.2",
     "@next/swc-wasm-nodejs": "16.3.0",
+    "@swc/helpers": "0.5.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.15.0",
